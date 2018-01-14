@@ -7,8 +7,8 @@ const paths = {
 // Webpack configuration
 module.exports = {
   entry: {
-    movies: path.join(paths.JS, 'index.js'),
-    'movie-player': path.join(paths.JS, 'movie-player.js'),
+    movies: ['babel-polyfill', path.join(paths.JS, 'index.js')],
+    'movie-player': ['babel-polyfill', path.join(paths.JS, 'movie-player.js')],
   },
   output: {
     path: paths.DIST,
