@@ -1,0 +1,22 @@
+{
+  "name": "videoStream",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-runtime": "^6.26.0",
+    "express": "^4.16.2",
+    "lodash": "^4.17.4",
+    "nodemon": "^1.14.11"
+  },
+  "scripts": {
+    "start": "nodemon --experimental-modules server/index.mjs"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}
