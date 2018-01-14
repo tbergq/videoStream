@@ -1,9 +1,9 @@
-import express from "express";
-import { fetchAllMovies } from "./movie.controller";
+import express from 'express';
+import { fetchAllMovies } from './movie.controller';
 
-let router = express.Router();
+const router = express.Router();
 
-router.get("/", fetchAllMovies);
+router.get('/', fetchAllMovies);
 /* router.get("/allMovies", controller.readAllMovies);
 router.get("/stream/:path", controller.stream);
 router.get("/subtitles/:path", controller.subtitles);

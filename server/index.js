@@ -3,11 +3,12 @@ import morgan from 'morgan';
 
 import createRoutes from './routes';
 
+const port = process.env.PORT || 3300;
 const app = express();
 
-app.use(morgan());
+app.use(morgan('dev'));
 createRoutes(app);
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Hello World!'));
 
-app.listen(3300, () => console.log('Example app listening on port 3300!'))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`)); // eslint-disable-line
