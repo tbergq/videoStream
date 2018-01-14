@@ -18,8 +18,8 @@ const getSubtitleUrl = (path) => {
   return exist ? fileName : "";
 }
 
-export const readAllMovies = () => {
-  const files = fs.readdirSync(MOVIE_PATH);
+export const readAllMovies = (path = MOVIE_PATH) => {
+  const files = fs.readdirSync(path);
   let outFiles = [];
 
   files.forEach(file => {
@@ -32,21 +32,21 @@ export const readAllMovies = () => {
       return;
     }
 
-    const stat = fs.statSync(`${MOVIE_PATH}/${file}`);
+    const stat = fs.statSync(`${path}/${file}`);
     const isDirectory = stat.isDirectory();
     const isFile = stat.isFile();
     const fileType = isFile ? getFileType(file) : null;
     const hasSrt = fs.existsSync();
-
+    
     if (isDirectory) {
-      const recursiveFiles = readAllMovies(`${MOVIE_PATH}/${file}`);
+      const recursiveFiles = readAllMovies(`${path}/${file}`);
       recursiveFiles.forEach(item => outFiles.push(item));
     } else if (fileType === "mkv" || fileType === "mp4") {
       outFiles.push({
         name: file,
         fileType: fileType,
-        fullPath: `${MOVIE_PATH}/${file}`,
-        subtitleUrl: getSubtitleUrl(`${MOVIE_PATH}/${file}`)
+        fullPath: `${path}/${file}`,
+        subtitleUrl: getSubtitleUrl(`${path}/${file}`)
       });
     }
   });

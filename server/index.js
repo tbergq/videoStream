@@ -1,8 +1,11 @@
 import express from 'express';
+import morgan from 'morgan';
+
 import createRoutes from './routes';
 
 const app = express();
 
+app.use(morgan());
 createRoutes(app);
 
 app.get('/', (req, res) => res.send('Hello World!'))
