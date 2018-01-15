@@ -6,9 +6,11 @@ import { injectGlobal } from 'styled-components';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import Header from './Header';
 import reducers from '../redux/reducers';
+
 
 injectGlobal`
   .navbar {

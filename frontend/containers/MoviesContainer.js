@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { getMovies } from '../redux/reducers';
 import { fetchMovies } from '../redux/actions/MoviesActions';
+import MovieList from '../components/MovieList/MovieList';
 
 class MoviesContainer extends React.Component {
   componentWillMount() {
@@ -11,11 +12,7 @@ class MoviesContainer extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        MoviesContainer: <span>{JSON.stringify(this.props.movies)}</span>
-      </div>
-    );
+    return <MovieList movies={this.props.movies} />;
   }
 }
 

@@ -18,6 +18,21 @@ module.exports = {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /\.css$/,
+        loader: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+            },
+          },
+        ],
+      },
     ],
   },
 };

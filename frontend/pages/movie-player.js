@@ -1,5 +1,15 @@
-const lol = 'lol';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-console.log(lol);
+import Layout from '../components/Layout';
 
-export default lol;
+const MoviePlayer = () => (
+  <Layout>
+    <div>Movie player</div>
+  </Layout>
+);
+
+ReactDOM.render(
+  <MoviePlayer />,
+  document.getElementById('root'),
+);

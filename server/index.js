@@ -18,4 +18,10 @@ app.get('/', (req, res) => {
   res.send(html);
 });
 
+app.get('/movie-player', (req, res) => {
+  const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html')).toString();
+  const html = indexHtml.replace('%script%', '<script src="movie-player.bundle.js"></script>');
+  res.send(html);
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`)); // eslint-disable-line
