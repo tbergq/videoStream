@@ -19,11 +19,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/movie-player', (req, res) => {
-  const { movie } = req.query;
-  console.log('query', req.query);
+  const { movie, subtitleUrl } = req.query;
   const initialState = {
     moviePlayer: {
       moviePath: encodeURIComponent(movie),
+      subtitleUrl: encodeURIComponent(subtitleUrl),
     },
   };
   const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html')).toString();

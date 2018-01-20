@@ -7,12 +7,13 @@ import { getMoviePlayer } from '../redux/reducers';
 
 const MoviePlayerContainer = props => (
   <div>
-    <MoviePlayer movieUrl={props.moviePath} />
+    <MoviePlayer movieUrl={props.moviePath} subtitleUrl={props.subtitleUrl} />
   </div>
 );
 
 MoviePlayerContainer.propTypes = {
   moviePath: PropTypes.string.isRequired,
+  subtitleUrl: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
