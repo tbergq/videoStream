@@ -52,3 +52,6 @@ export const readAllMovies = (path = MOVIE_PATH) => {
 
   return outFiles;
 };
+
+export const getStream = (path, options) => fs.createReadStream(path, options || {});
+

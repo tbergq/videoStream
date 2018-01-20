@@ -14,6 +14,7 @@ module.exports = {
     path: paths.DIST,
     filename: '[name].bundle.js',
   },
+  watch: true,
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },

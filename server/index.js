@@ -19,8 +19,21 @@ app.get('/', (req, res) => {
 });
 
 app.get('/movie-player', (req, res) => {
+  const { movie } = req.query;
+  console.log('query', req.query);
+  const initialState = {
+    moviePlayer: {
+      moviePath: encodeURIComponent(movie),
+    },
+  };
   const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html')).toString();
-  const html = indexHtml.replace('%script%', '<script src="movie-player.bundle.js"></script>');
+  const html = indexHtml.replace(
+    '%script%',
+    [
+      `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(initialState).replace(/</g, '\\u003c')}</script>`,
+      '<script src="movie-player.bundle.js"></script>',
+    ].join(''),
+  );
   res.send(html);
 });
 
