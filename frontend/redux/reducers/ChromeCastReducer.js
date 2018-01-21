@@ -6,6 +6,7 @@ const initalState = {
   mediaInfo: null,
   player: null,
   playerController: null,
+  isCasting: false,
 };
 
 export default function chromeCastReducer(state = initalState, action) {
@@ -20,6 +21,7 @@ export default function chromeCastReducer(state = initalState, action) {
         mediaInfo: action.mediaInfo,
         player: action.player,
         playerController: action.playerController,
+        isCasting: action.isCasting,
       };
     default:
       return state;

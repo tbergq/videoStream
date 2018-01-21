@@ -1,26 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import idx from 'idx';
 
 import MoviePlayer from '../components/MoviePlayer/MoviePlayer';
 import { getMoviePlayer } from '../redux/reducers';
 import ChromeCastContainer from '../containers/ChromeCastContainer';
 
 
-const MoviePlayerContainer = props => (
+const MoviePlayerContainer = ({ isCasting, moviePath, subtitleUrl }) => (
   <div>
-    {/* <MoviePlayer movieUrl={props.moviePath} subtitleUrl={props.subtitleUrl} /> */}
-    <ChromeCastContainer movieUrl={props.moviePath} subtitleUrl={props.subtitleUrl} />
+    {!isCasting && <MoviePlayer movieUrl={moviePath} subtitleUrl={subtitleUrl} />}
+    <ChromeCastContainer movieUrl={moviePath} subtitleUrl={subtitleUrl} />
   </div>
 );
 
 MoviePlayerContainer.propTypes = {
   moviePath: PropTypes.string.isRequired,
   subtitleUrl: PropTypes.string.isRequired,
+  isCasting: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   ...getMoviePlayer(state),
+  isCasting: idx(state, _ => _.chromeCast.isCasting),
 });
 
 export default connect(mapStateToProps)(MoviePlayerContainer);

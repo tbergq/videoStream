@@ -64,6 +64,7 @@ export const startCast = (mediaUrl, subtitleUrl, session) => async (dispatch) =>
       mediaInfo,
       player,
       playerController,
+      isCasting: true,
     });
   } catch (err) {
     console.log('load mediafailed', err);
