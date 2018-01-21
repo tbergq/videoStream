@@ -16,7 +16,7 @@ export const stream = (req, res) => {
   console.log('filetype is', fileType);
   if (fileType === 'vtt') {
     console.log('should send vtt');
-    return res.sendfile(filePath);
+    return res.sendFile(filePath);
   }
 
   const stat = fs.statSync(filePath);

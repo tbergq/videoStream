@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
+import cors from 'cors';
 
 import createRoutes from './routes';
 
@@ -10,6 +11,7 @@ const app = express();
 
 app.use(express.static('dist'));
 app.use(morgan('dev'));
+app.use(cors());
 createRoutes(app);
 
 app.get('/', (req, res) => {
@@ -30,6 +32,7 @@ app.get('/movie-player', (req, res) => {
   const html = indexHtml.replace(
     '%script%',
     [
+      '<script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>',
       `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(initialState).replace(/</g, '\\u003c')}</script>`,
       '<script src="movie-player.bundle.js"></script>',
     ].join(''),

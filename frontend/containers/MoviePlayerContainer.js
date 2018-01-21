@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 
 import MoviePlayer from '../components/MoviePlayer/MoviePlayer';
 import { getMoviePlayer } from '../redux/reducers';
+import ChromeCastContainer from '../containers/ChromeCastContainer';
+
 
 const MoviePlayerContainer = props => (
   <div>
-    <MoviePlayer movieUrl={props.moviePath} subtitleUrl={props.subtitleUrl} />
+    {/* <MoviePlayer movieUrl={props.moviePath} subtitleUrl={props.subtitleUrl} /> */}
+    <ChromeCastContainer movieUrl={props.moviePath} subtitleUrl={props.subtitleUrl} />
   </div>
 );
 
