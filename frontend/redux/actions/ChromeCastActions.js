@@ -1,6 +1,7 @@
 export const GOT_CAST_SESSION = 'chromeCast/GOT_CAST_SESSION';
 export const GOT_CAST_CONTEXT = 'chromeCast/GOT_CAST_CONTEXT';
 export const CAST_STARTED = 'chromeCast/CAST_STARTED';
+export const CAST_STOPPED = 'chromeCast/CAST_STOPPED';
 
 export const setUpCastSession = () => {
   const session = cast.framework.CastContext.getInstance().getCurrentSession();
@@ -71,4 +72,9 @@ export const startCast = (mediaUrl, subtitleUrl, session) => async (dispatch) =>
     console.error(err);
   }
 };
+
+export const castingStopped = () => ({
+  type: CAST_STOPPED,
+  isCasting: false,
+});
 

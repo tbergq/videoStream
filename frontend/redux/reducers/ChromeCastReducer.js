@@ -1,4 +1,4 @@
-import { GOT_CAST_SESSION, GOT_CAST_CONTEXT, CAST_STARTED } from '../actions/ChromeCastActions';
+import { GOT_CAST_SESSION, GOT_CAST_CONTEXT, CAST_STARTED, CAST_STOPPED } from '../actions/ChromeCastActions';
 
 const initalState = {
   session: null,
@@ -23,6 +23,8 @@ export default function chromeCastReducer(state = initalState, action) {
         playerController: action.playerController,
         isCasting: action.isCasting,
       };
+    case CAST_STOPPED:
+      return { ...state, isCasting: action.isCasting };
     default:
       return state;
   }

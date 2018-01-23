@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import isUndefined from 'lodash/isUndefined';
 
 import { getChromeCastReducer } from '../redux/reducers';
-import { setCastContext, setUpCastSession, startCast } from '../redux/actions/ChromeCastActions';
+import { setCastContext, setUpCastSession, startCast, castingStopped } from '../redux/actions/ChromeCastActions';
 import ChromeCast from '../components/ChromeCast/ChromeCast';
 
 class ChromeCastContainer extends React.Component {
@@ -32,7 +32,7 @@ class ChromeCastContainer extends React.Component {
         if (event.castState === 'CONNECTED') {
           this.props.startCast(cast.framework.CastContext.getInstance().getCurrentSession());
         } else if (event.castState === 'NOT_CONNECTED') {
-          // this.disconnect();
+          this.props.castingStopped();
         }
       },
     );
@@ -58,6 +58,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   setUpCastSession: () => dispatch(setUpCastSession()),
   startCast:
   session => dispatch(startCast(ownProps.movieUrl, ownProps.subtitleUrl, session)),
+  castingStopped: () => dispatch(castingStopped()),
 });
 
 ChromeCastContainer.propTypes = {
@@ -67,6 +68,7 @@ ChromeCastContainer.propTypes = {
   castContext: PropTypes.object, //eslint-disable-line
   session: PropTypes.object,//eslint-disable-line
   startCast: PropTypes.func.isRequired,
+  castingStopped: PropTypes.func.isRequired,
 };
 
 
