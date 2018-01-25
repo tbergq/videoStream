@@ -5,6 +5,7 @@ import path from 'path';
 import cors from 'cors';
 
 import createRoutes from './routes';
+import { getPrivateIp } from './services/nework.service';
 
 const port = process.env.PORT || 3300;
 const app = express();
@@ -20,12 +21,14 @@ app.get('/', (req, res) => {
   res.send(html);
 });
 
-app.get('/movie-player', (req, res) => {
+app.get('/movie-player', async (req, res) => {
   const { movie, subtitleUrl } = req.query;
+  const ip = await getPrivateIp();
   const initialState = {
     moviePlayer: {
       moviePath: encodeURIComponent(movie),
       subtitleUrl: encodeURIComponent(subtitleUrl),
+      serverAddress: `${ip}:${port}`,
     },
   };
   const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html')).toString();

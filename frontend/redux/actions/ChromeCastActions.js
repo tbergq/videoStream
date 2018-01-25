@@ -1,7 +1,12 @@
+import get from 'lodash/get';
+
 export const GOT_CAST_SESSION = 'chromeCast/GOT_CAST_SESSION';
 export const GOT_CAST_CONTEXT = 'chromeCast/GOT_CAST_CONTEXT';
 export const CAST_STARTED = 'chromeCast/CAST_STARTED';
 export const CAST_STOPPED = 'chromeCast/CAST_STOPPED';
+
+
+const serverAddress = get(window, '__PRELOADED_STATE__.moviePlayer.serverAddress', '');
 
 export const setUpCastSession = () => {
   const session = cast.framework.CastContext.getInstance().getCurrentSession();
@@ -35,7 +40,7 @@ function setUpSubtitles(subtitleUrl) {
     1, // track ID
     chrome.cast.media.TrackType.TEXT,
   );
-  sub.trackContentId = `http://192.168.1.100:3300/api/movies/stream/${subtitleUrl}`;
+  sub.trackContentId = `http://${serverAddress}/api/movies/stream/${subtitleUrl}`;
   sub.trackContentType = 'text/vtt';
   sub.subtype = chrome.cast.media.TextTrackType.SUBTITLES;
   sub.name = 'Spanish Subtitles';
@@ -46,7 +51,7 @@ function setUpSubtitles(subtitleUrl) {
 
 
 export const startCast = (mediaUrl, subtitleUrl, session) => async (dispatch) => {
-  const mediaInfo = setupMediaInfo(`http://192.168.1.100:3300/api/movies/stream/${mediaUrl}`);
+  const mediaInfo = setupMediaInfo(`http://${serverAddress}/api/movies/stream/${mediaUrl}`);
   console.log('mediaInfo', mediaInfo);
   const request = new chrome.cast.media.LoadRequest(mediaInfo);
 
