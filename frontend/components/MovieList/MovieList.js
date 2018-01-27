@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
+
+import MovieListItem from './MovieListItem';
 
 const MovieList = ({ movies }) => (
-  <ListGroup>
+  <ListGroup componentClass="ul">
     {movies.map(movie => (
-      <ListGroupItem
+      <MovieListItem
         key={movie.fullPath}
-        href={`/movie-player?movie=${encodeURIComponent(movie.fullPath)}&subtitleUrl=${encodeURIComponent(movie.subtitleUrl)}`}
-      >
-        {movie.name}
-      </ListGroupItem>
+        movie={movie}
+      />
     ))}
   </ListGroup>
 );
