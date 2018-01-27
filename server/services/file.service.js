@@ -1,9 +1,13 @@
 import fs from 'fs';
 import last from 'lodash/last';
+import srt2vtt from 'srt-to-vtt';
 
 export const MOVIE_PATH = '/Users/tronbe/Movies';
 
-const getFileType = (fileName) => {
+export const isHiddenFile = filename => filename.indexOf('.') === 0;
+export const isDeleted = filePath => !fs.existsSync(filePath);
+
+export const getFileType = (fileName) => {
   const fileNameSplitted = fileName.split('.');
   return last(fileNameSplitted);
 };
@@ -24,7 +28,7 @@ export const readAllMovies = (path = MOVIE_PATH) => {
 
   files.forEach((file) => {
     if (
-      file.indexOf('.') === 0 /* ||
+      isHiddenFile(file) /* ||
       this.currentlyConverting.indexOf(`${path}/${file}`) >= 0 */
     ) {
       // Don't return files starting with . altso known as hidden files
@@ -54,4 +58,15 @@ export const readAllMovies = (path = MOVIE_PATH) => {
 };
 
 export const getStream = (path, options) => fs.createReadStream(path, options || {});
+
+export const convertSrtToVtt = (filePath) => {
+  const srtSplit = filePath.split('.');
+  srtSplit[srtSplit.length - 1] = 'vtt';
+  const vttFileName = srtSplit.join('.');
+
+  fs
+    .createReadStream(filePath)
+    .pipe(srt2vtt())
+    .pipe(fs.createWriteStream(vttFileName));
+};
 

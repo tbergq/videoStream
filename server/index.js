@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import createRoutes from './routes';
 import { getPrivateIp } from './services/nework.service';
+import watcher from './utils/file-watcher';
 
 const port = process.env.PORT || 3300;
 const app = express();
@@ -42,5 +43,7 @@ app.get('/movie-player', async (req, res) => {
   );
   res.send(html);
 });
+
+watcher();
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`)); // eslint-disable-line
