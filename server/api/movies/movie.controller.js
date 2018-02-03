@@ -1,12 +1,17 @@
 import fs from 'fs';
 
 import { sendResponse } from '../../utils/helpers';
-import { readAllMovies, getStream } from '../../services/file.service';
+import { readAllMovies, getStream, deleteMovieAndSubtitles } from '../../services/file.service';
 
 export const fetchAllMovies = (req, res) => {
   const files = readAllMovies();
 
   return sendResponse(200, files, res);
+};
+
+export const destroy = (req, res) => {
+  deleteMovieAndSubtitles(req.params.path);
+  return sendResponse(200, null, res);
 };
 
 export const stream = (req, res) => {

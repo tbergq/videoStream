@@ -4,12 +4,13 @@ import { ListGroup } from 'react-bootstrap';
 
 import MovieListItem from './MovieListItem';
 
-const MovieList = ({ movies }) => (
-  <ListGroup componentClass="ul">
+const MovieList = ({ movies, deleteMovie }) => (
+  <ListGroup componentClass="div">
     {movies.map(movie => (
       <MovieListItem
         key={movie.fullPath}
         movie={movie}
+        deleteMovie={deleteMovie}
       />
     ))}
   </ListGroup>
@@ -17,6 +18,7 @@ const MovieList = ({ movies }) => (
 
 MovieList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteMovie: PropTypes.func.isRequired,
 };
 
 export default MovieList;

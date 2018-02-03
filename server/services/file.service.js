@@ -6,6 +6,11 @@ export const MOVIE_PATH = '/Users/tronbe/Movies';
 
 export const isHiddenFile = filename => filename.indexOf('.') === 0;
 export const isDeleted = filePath => !fs.existsSync(filePath);
+export const changeFileType = (file, newFileType) => {
+  const fileSplit = file.split('.');
+  fileSplit[fileSplit.length - 1] = newFileType;
+  return fileSplit.join('.');
+};
 
 export const getFileType = (fileName) => {
   const fileNameSplitted = fileName.split('.');
@@ -70,3 +75,16 @@ export const convertSrtToVtt = (filePath) => {
     .pipe(fs.createWriteStream(vttFileName));
 };
 
+const deleteFileIfExists = (filePath) => {
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+  }
+};
+
+export const deleteMovieAndSubtitles = (filePath) => {
+  const srt = changeFileType(filePath, 'srt');
+  const vtt = changeFileType(filePath, 'vtt');
+  deleteFileIfExists(filePath);
+  deleteFileIfExists(vtt);
+  deleteFileIfExists(srt);
+};
