@@ -50,7 +50,8 @@
     "eslint": "eslint .",
     "build": "rimraf dist/ && webpack",
     "dev": "npm run build && nodemon --exec babel-node server/index.js",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "babel-preset-jest": "^22.1.0",

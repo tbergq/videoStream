@@ -9,7 +9,7 @@ import {
 } from '../services/file.service';
 
 
-const fileHandler = (fullPath) => {
+export const fileHandler = (fullPath) => {
   switch (getFileType(fullPath)) {
     case 'srt':
       convertSrtToVtt(fullPath);
@@ -23,7 +23,7 @@ const fileHandler = (fullPath) => {
   }
 };
 
-const watchHandler = (fullPath) => {
+export const watchHandler = (fullPath) => {
   const stats = fs.statSync(fullPath);
   const isFile = stats.isFile();
   const isDirectory = stats.isDirectory();

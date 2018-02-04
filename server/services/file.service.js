@@ -13,6 +13,7 @@ export const changeFileType = (file, newFileType) => {
 };
 
 export const getFileType = (fileName) => {
+  console.log('get file type');
   const fileNameSplitted = fileName.split('.');
   return last(fileNameSplitted);
 };
@@ -67,6 +68,7 @@ export const readAllMovies = (path = MOVIE_PATH) => {
 export const getStream = (path, options) => fs.createReadStream(path, options || {});
 
 export const convertSrtToVtt = (filePath) => {
+  console.log('convertSrtToVtt');
   const srtSplit = filePath.split('.');
   srtSplit[srtSplit.length - 1] = 'vtt';
   const vttFileName = srtSplit.join('.');

@@ -1,7 +1,7 @@
-/* eslint-disable import/first */
-jest.mock('../services/file.service.js');
 import request from 'supertest';
 import app from '../app';
+
+jest.mock('../services/file.service.js');
 
 describe('App', () => {
   it('Should respond with 404 to unknown paths', async () => {
