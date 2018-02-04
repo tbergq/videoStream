@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { fileHandler, watchHandler } from '../file-watcher';
 import { convertSrtToVtt } from '../../services/file.service';
 

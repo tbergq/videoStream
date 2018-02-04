@@ -12,25 +12,16 @@ export const changeFileType = (file, newFileType) => {
   return fileSplit.join('.');
 };
 
-export const getFileType = (fileName) => {
-  console.log('get file type');
-  const fileNameSplitted = fileName.split('.');
-  return last(fileNameSplitted);
-};
+export const getFileType = fileName => last(fileName.split('.'));
 
-const getSubtitleUrl = (path) => {
-  const fileNameSplitted = path.split('.');
-  fileNameSplitted[fileNameSplitted.length - 1] = 'vtt';
-
-  const fileName = fileNameSplitted.join('.');
+export const getSubtitleUrl = (path) => {
+  const fileName = changeFileType(path, 'vtt');
 
   const exist = fs.existsSync(fileName);
   return exist ? fileName : '';
 };
 
 export const readAllMovies = (path = MOVIE_PATH) => {
-  console.log('fetchAllMovies');
-
   const files = fs.readdirSync(path);
   const outFiles = [];
 
@@ -68,10 +59,7 @@ export const readAllMovies = (path = MOVIE_PATH) => {
 export const getStream = (path, options) => fs.createReadStream(path, options || {});
 
 export const convertSrtToVtt = (filePath) => {
-  console.log('convertSrtToVtt');
-  const srtSplit = filePath.split('.');
-  srtSplit[srtSplit.length - 1] = 'vtt';
-  const vttFileName = srtSplit.join('.');
+  const vttFileName = changeFileType(filePath, 'vtt');
 
   fs
     .createReadStream(filePath)
@@ -79,7 +67,7 @@ export const convertSrtToVtt = (filePath) => {
     .pipe(fs.createWriteStream(vttFileName));
 };
 
-const deleteFileIfExists = (filePath) => {
+export const deleteFileIfExists = (filePath) => {
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
   }
