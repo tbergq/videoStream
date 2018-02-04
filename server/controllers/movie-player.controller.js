@@ -1,4 +1,4 @@
-import getHtml from './get-html';
+import getHtml from '../utils/get-html';
 import { getPrivateIp } from '../services/nework.service';
 
 const port = process.env.PORT || 3300;
