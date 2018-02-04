@@ -18,7 +18,7 @@ export const stream = (req, res) => {
   const filePath = `${req.params.path}`;
   const splitName = req.params.path.split('.');
   const fileType = splitName[splitName.length - 1];
-  console.log('filetype is', fileType);
+
   if (fileType === 'vtt') {
     console.log('should send vtt');
     return res.sendFile(filePath);
@@ -47,7 +47,6 @@ export const stream = (req, res) => {
     });
     movieStream.pipe(res);
   } else {
-    console.log(`ALL: ${total}`);
     res.writeHead(200, {
       'Content-Length': total,
       'Content-Type': 'video/mp4',

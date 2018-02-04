@@ -5,7 +5,11 @@ module.exports = {
         "fetch": true,
         "window": true,
         "cast": true,
-        "chrome": true
+        "chrome": true,
+        "describe": true,
+        "it": true,
+        "expect": true,
+        "jest": true
     },
     "rules": {
         "react/jsx-filename-extension": 0

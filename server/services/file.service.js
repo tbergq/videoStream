@@ -28,6 +28,8 @@ const getSubtitleUrl = (path) => {
 };
 
 export const readAllMovies = (path = MOVIE_PATH) => {
+  console.log('fetchAllMovies');
+
   const files = fs.readdirSync(path);
   const outFiles = [];
 
