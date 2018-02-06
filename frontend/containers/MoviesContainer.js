@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { getMovies } from '../redux/reducers';
 import { fetchMovies, deleteMovie } from '../redux/actions/MoviesActions';
 import MovieList from '../components/MovieList/MovieList';
+import RefreshMovieList from '../components/MovieList/RefreshMovieList';
+
 
 class MoviesContainer extends React.Component {
   componentDidMount() {
@@ -12,7 +14,11 @@ class MoviesContainer extends React.Component {
   }
 
   render() {
-    return <MovieList movies={this.props.movies} deleteMovie={this.props.deleteMovie} />;
+    return ([
+      <RefreshMovieList key="refresh-movie-list" fetchMovies={this.props.fetchMovies} />,
+      <MovieList key="movie-list" movies={this.props.movies} deleteMovie={this.props.deleteMovie} />,
+    ]
+    );
   }
 }
 
