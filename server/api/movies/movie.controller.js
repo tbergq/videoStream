@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import { sendResponse } from '../../utils/helpers';
-import { readAllMovies, getStream, deleteMovieAndSubtitles } from '../../services/file.service';
+import { readAllMovies, getStream, deleteMovieAndSubtitles, getFileType } from '../../services/file.service';
 
 export const fetchAllMovies = (req, res) => {
   const files = readAllMovies();
@@ -15,12 +15,10 @@ export const destroy = (req, res) => {
 };
 
 export const stream = (req, res) => {
-  const filePath = `${req.params.path}`;
-  const splitName = req.params.path.split('.');
-  const fileType = splitName[splitName.length - 1];
+  const filePath = req.params.path;
+  const fileType = getFileType(filePath);
 
   if (fileType === 'vtt') {
-    console.log('should send vtt');
     return res.sendFile(filePath);
   }
 
@@ -36,7 +34,6 @@ export const stream = (req, res) => {
     const start = parseInt(partialstart, 10);
     const end = partialend ? parseInt(partialend, 10) : total - 1;
     const chunksize = (end - start) + 1;
-    console.log(`RANGE: ${start} - ${end} = ${chunksize}`);
 
     const movieStream = fs.createReadStream(filePath, { start, end });
     res.writeHead(206, {
