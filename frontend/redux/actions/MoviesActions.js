@@ -3,7 +3,7 @@ import Http from '../../utils/Http';
 export const FETCHED_MOVIES = 'movies/FETCHED_MOVIES';
 export const DELETED_MOVIE = 'movies/DELETED_MOVIE';
 
-export const fetchMovies = () => async (dispatch) => {
+export const fetchMovies = () => async dispatch => {
   const movies = await Http('/api/movies');
   dispatch({
     type: FETCHED_MOVIES,
@@ -11,7 +11,7 @@ export const fetchMovies = () => async (dispatch) => {
   });
 };
 
-export const deleteMovie = moviePath => async (dispatch) => {
+export const deleteMovie = moviePath => async dispatch => {
   await Http(`api/movies/${encodeURIComponent(moviePath)}`, {
     method: 'DELETE',
   });
@@ -20,4 +20,3 @@ export const deleteMovie = moviePath => async (dispatch) => {
     moviePath,
   });
 };
-

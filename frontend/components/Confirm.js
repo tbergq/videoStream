@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 
-const Confirm = ({
-  show, close, title, body, successCallback,
-}) => (
+const Confirm = ({ show, close, title, body, successCallback }) => (
   <Modal show={show}>
     <Modal.Header>
       <Modal.Title>{title}</Modal.Title>
@@ -14,7 +12,9 @@ const Confirm = ({
 
     <Modal.Footer>
       <Button onClick={close}>Cancel</Button>
-      <Button bsStyle="primary" onClick={successCallback}>Ok</Button>
+      <Button bsStyle="primary" onClick={successCallback}>
+        Ok
+      </Button>
     </Modal.Footer>
   </Modal>
 );

@@ -11,7 +11,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Header from './Header';
 import reducers from '../redux/reducers';
 
-
 injectGlobal`
   .navbar {
     border-radius: 0;
@@ -26,9 +25,7 @@ const Layout = ({ children }) => (
       <Header />
       <Grid>
         <Row>
-          <Col xs={12}>
-            {children}
-          </Col>
+          <Col xs={12}>{children}</Col>
         </Row>
       </Grid>
     </div>

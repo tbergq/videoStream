@@ -9,7 +9,7 @@ import {
 } from '../file.service';
 
 jest.mock('fs', () => ({
-  existsSync: (input) => {
+  existsSync: input => {
     if (input.indexOf('exists.vtt') >= 0) {
       return true;
     }
@@ -68,17 +68,20 @@ describe('File service', () => {
 
   describe('readAllMovies', () => {
     const movies = readAllMovies('testDir');
-    expect(movies).toEqual([{
-      name: 'exists.mkv',
-      fileType: 'mkv',
-      fullPath: 'testDir/exists.mkv',
-      subtitleUrl: 'testDir/exists.vtt',
-    }, {
-      name: 'lol.mp4',
-      fileType: 'mp4',
-      fullPath: 'testDir/lol.mp4',
-      subtitleUrl: '',
-    }]);
+    expect(movies).toEqual([
+      {
+        name: 'exists.mkv',
+        fileType: 'mkv',
+        fullPath: 'testDir/exists.mkv',
+        subtitleUrl: 'testDir/exists.vtt',
+      },
+      {
+        name: 'lol.mp4',
+        fileType: 'mp4',
+        fullPath: 'testDir/lol.mp4',
+        subtitleUrl: '',
+      },
+    ]);
   });
 
   describe('deleteFileIfExists', () => {

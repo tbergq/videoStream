@@ -10,7 +10,4 @@ const Movies = () => (
   </Layout>
 );
 
-ReactDOM.render(
-  <Movies />,
-  document.getElementById('root'),
-);
+ReactDOM.render(<Movies />, document.getElementById('root'));

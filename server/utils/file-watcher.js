@@ -8,8 +8,7 @@ import {
   MOVIE_PATH,
 } from '../services/file.service';
 
-
-export const fileHandler = (fullPath) => {
+export const fileHandler = fullPath => {
   switch (getFileType(fullPath)) {
     case 'srt':
       convertSrtToVtt(fullPath);
@@ -23,7 +22,7 @@ export const fileHandler = (fullPath) => {
   }
 };
 
-export const watchHandler = (fullPath) => {
+export const watchHandler = fullPath => {
   const stats = fs.statSync(fullPath);
   const isFile = stats.isFile();
   const isDirectory = stats.isDirectory();
@@ -33,7 +32,7 @@ export const watchHandler = (fullPath) => {
   } else if (isDirectory) {
     const files = fs.readdirSync(fullPath);
 
-    files.forEach((file) => {
+    files.forEach(file => {
       watchHandler(`${fullPath}/${file}`);
     });
   }

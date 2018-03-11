@@ -1,4 +1,3 @@
-
 export default async function Http(url, config) {
   try {
     const response = await fetch(url, config);

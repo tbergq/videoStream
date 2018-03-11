@@ -1,4 +1,9 @@
-import { GOT_CAST_SESSION, GOT_CAST_CONTEXT, CAST_STARTED, CAST_STOPPED } from '../actions/ChromeCastActions';
+import {
+  GOT_CAST_SESSION,
+  GOT_CAST_CONTEXT,
+  CAST_STARTED,
+  CAST_STOPPED,
+} from '../actions/ChromeCastActions';
 
 const initalState = {
   session: null,

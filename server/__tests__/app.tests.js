@@ -31,7 +31,11 @@ describe('App', () => {
 
   describe('Test the /api/movies/:path path', () => {
     it('Should respond the DELETE method', async () => {
-      const response = await request(app).delete(`/api/movies/${encodeURIComponent('/Users/tronbe/Movies/tester/Vikings.S05E04.The Plan.srt')}`);
+      const response = await request(app).delete(
+        `/api/movies/${encodeURIComponent(
+          '/Users/tronbe/Movies/tester/Vikings.S05E04.The Plan.srt',
+        )}`,
+      );
       expect(response.statusCode).toBe(200);
     });
   });

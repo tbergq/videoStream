@@ -1,7 +1,12 @@
 import fs from 'fs';
 
 import { sendResponse } from '../../utils/helpers';
-import { readAllMovies, getStream, deleteMovieAndSubtitles, getFileType } from '../../services/file.service';
+import {
+  readAllMovies,
+  getStream,
+  deleteMovieAndSubtitles,
+  getFileType,
+} from '../../services/file.service';
 
 export const fetchAllMovies = (req, res) => {
   const files = readAllMovies();
@@ -33,7 +38,7 @@ export const stream = (req, res) => {
 
     const start = parseInt(partialstart, 10);
     const end = partialend ? parseInt(partialend, 10) : total - 1;
-    const chunksize = (end - start) + 1;
+    const chunksize = end - start + 1;
 
     const movieStream = fs.createReadStream(filePath, { start, end });
     res.writeHead(206, {
@@ -51,4 +56,3 @@ export const stream = (req, res) => {
   const movieStreamAll = getStream(filePath);
   return movieStreamAll.pipe(res);
 };
-

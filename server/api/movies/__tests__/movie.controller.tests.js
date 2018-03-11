@@ -3,11 +3,10 @@ import { fetchAllMovies, destroy, stream } from '../movie.controller';
 import { sendResponse } from '../../../utils/helpers';
 import { deleteMovieAndSubtitles } from '../../../services/file.service';
 
-
 jest.mock('../../../services/file.service.js', () => ({
   readAllMovies: () => ['test', 'test2'],
   deleteMovieAndSubtitles: jest.fn(),
-  getFileType: (input) => {
+  getFileType: input => {
     const a = input.split('.');
     return a[a.length - 1];
   },

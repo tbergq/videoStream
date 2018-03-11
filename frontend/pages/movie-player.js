@@ -10,7 +10,4 @@ const MoviePlayer = () => (
   </Layout>
 );
 
-ReactDOM.render(
-  <MoviePlayer />,
-  document.getElementById('root'),
-);
+ReactDOM.render(<MoviePlayer />, document.getElementById('root'));

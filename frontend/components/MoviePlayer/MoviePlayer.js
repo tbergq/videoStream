@@ -16,8 +16,14 @@ const MoviePlayer = ({ movieUrl, subtitleUrl }) => (
     <div>
       <video controls>
         <source src={`/api/movies/stream/${movieUrl}`} type="video/mp4" />
-        {subtitleUrl && <track src={`/api/movies/stream/${subtitleUrl}`} srcLang="es" label="Spanish" />}
-          Your browser does not support the video tag.
+        {subtitleUrl && (
+          <track
+            src={`/api/movies/stream/${subtitleUrl}`}
+            srcLang="es"
+            label="Spanish"
+          />
+        )}
+        Your browser does not support the video tag.
       </video>
     </div>
     <ButtonContainer>

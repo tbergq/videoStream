@@ -19,7 +19,6 @@ class MovieListItem extends React.Component {
   constructor(props) {
     super(props);
 
-
     this.renderTooltip = this.renderTooltip.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
   }
@@ -34,9 +33,7 @@ class MovieListItem extends React.Component {
 
     if (subtitleUrl) {
       const tooltip = (
-        <Tooltip id={`${fullPath}-sub-tooltip`}>
-          With subtitles
-        </Tooltip>
+        <Tooltip id={`${fullPath}-sub-tooltip`}>With subtitles</Tooltip>
       );
       return (
         <SubtitleContainer>
@@ -57,7 +54,9 @@ class MovieListItem extends React.Component {
           style={{ flex: 1 }}
           className="list-group-item"
           key={movie.fullPath}
-          href={`/movie-player?movie=${encodeURIComponent(movie.fullPath)}&subtitleUrl=${encodeURIComponent(movie.subtitleUrl)}`}
+          href={`/movie-player?movie=${encodeURIComponent(
+            movie.fullPath,
+          )}&subtitleUrl=${encodeURIComponent(movie.subtitleUrl)}`}
         >
           {movie.name}
           {this.renderTooltip()}

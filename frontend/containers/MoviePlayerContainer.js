@@ -7,10 +7,11 @@ import MoviePlayer from '../components/MoviePlayer/MoviePlayer';
 import { getMoviePlayer } from '../redux/reducers';
 import ChromeCastContainer from '../containers/ChromeCastContainer';
 
-
 const MoviePlayerContainer = ({ isCasting, moviePath, subtitleUrl }) => (
   <div>
-    {!isCasting && <MoviePlayer movieUrl={moviePath} subtitleUrl={subtitleUrl} />}
+    {!isCasting && (
+      <MoviePlayer movieUrl={moviePath} subtitleUrl={subtitleUrl} />
+    )}
     <ChromeCastContainer movieUrl={moviePath} subtitleUrl={subtitleUrl} />
   </div>
 );

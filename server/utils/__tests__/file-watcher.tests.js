@@ -2,14 +2,14 @@ import { fileHandler, watchHandler } from '../file-watcher';
 import { convertSrtToVtt } from '../../services/file.service';
 
 jest.mock('../../services/file.service.js', () => ({
-  getFileType: (input) => {
+  getFileType: input => {
     const splitInput = input.split('.');
     return splitInput[splitInput.length - 1];
   },
   convertSrtToVtt: jest.fn(),
 }));
 jest.mock('fs', () => ({
-  statSync: (input) => {
+  statSync: input => {
     switch (input) {
       case 'test.srt':
         return {
@@ -37,4 +37,3 @@ describe('File watcher', () => {
     });
   });
 });
-

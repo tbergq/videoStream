@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 import isUndefined from 'lodash/isUndefined';
 
 import { getChromeCastReducer } from '../redux/reducers';
-import { setCastContext, setUpCastSession, startCast, castingStopped } from '../redux/actions/ChromeCastActions';
+import {
+  setCastContext,
+  setUpCastSession,
+  startCast,
+  castingStopped,
+} from '../redux/actions/ChromeCastActions';
 import ChromeCast from '../components/ChromeCast/ChromeCast';
 
 class ChromeCastContainer extends React.Component {
@@ -27,10 +32,12 @@ class ChromeCastContainer extends React.Component {
 
     castContext.addEventListener(
       cast.framework.CastContextEventType.CAST_STATE_CHANGED,
-      (event) => {
+      event => {
         console.log('cast state is', event.castState);
         if (event.castState === 'CONNECTED') {
-          this.props.startCast(cast.framework.CastContext.getInstance().getCurrentSession());
+          this.props.startCast(
+            cast.framework.CastContext.getInstance().getCurrentSession(),
+          );
         } else if (event.castState === 'NOT_CONNECTED') {
           this.props.castingStopped();
         }
@@ -42,9 +49,7 @@ class ChromeCastContainer extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.props.castContext && <ChromeCast {...this.props} />}
-      </div>
+      <div>{this.props.castContext && <ChromeCast {...this.props} />}</div>
     );
   }
 }
@@ -56,8 +61,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   setCastContext: castContext => dispatch(setCastContext(castContext)),
   setUpCastSession: () => dispatch(setUpCastSession()),
-  startCast:
-  session => dispatch(startCast(ownProps.movieUrl, ownProps.subtitleUrl, session)),
+  startCast: session =>
+    dispatch(startCast(ownProps.movieUrl, ownProps.subtitleUrl, session)),
   castingStopped: () => dispatch(castingStopped()),
 });
 
@@ -71,5 +76,6 @@ ChromeCastContainer.propTypes = {
   castingStopped: PropTypes.func.isRequired,
 };
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChromeCastContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ChromeCastContainer,
+);

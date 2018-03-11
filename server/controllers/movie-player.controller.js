@@ -14,10 +14,15 @@ export default async function moviePlayerController(req, res) {
     },
   };
 
-  const html = getHtml([
-    '<script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>',
-    `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(initialState).replace(/</g, '\\u003c')}</script>`,
-    '<script src="movie-player.bundle.js"></script>',
-  ].join(''), 'Cast screen');
+  const html = getHtml(
+    [
+      '<script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>',
+      `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
+        initialState,
+      ).replace(/</g, '\\u003c')}</script>`,
+      '<script src="movie-player.bundle.js"></script>',
+    ].join(''),
+    'Cast screen',
+  );
   res.send(html);
 }

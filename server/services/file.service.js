@@ -14,7 +14,7 @@ export const changeFileType = (file, newFileType) => {
 
 export const getFileType = fileName => last(fileName.split('.'));
 
-export const getSubtitleUrl = (path) => {
+export const getSubtitleUrl = path => {
   const fileName = changeFileType(path, 'vtt');
 
   const exist = fs.existsSync(fileName);
@@ -25,9 +25,11 @@ export const readAllMovies = (path = MOVIE_PATH) => {
   const files = fs.readdirSync(path);
   const outFiles = [];
 
-  files.forEach((file) => {
+  files.forEach(file => {
     if (
-      isHiddenFile(file) /* ||
+      isHiddenFile(
+        file,
+      ) /* ||
       this.currentlyConverting.indexOf(`${path}/${file}`) >= 0 */
     ) {
       // Don't return files starting with . altso known as hidden files
@@ -56,9 +58,10 @@ export const readAllMovies = (path = MOVIE_PATH) => {
   return outFiles;
 };
 
-export const getStream = (path, options) => fs.createReadStream(path, options || {});
+export const getStream = (path, options) =>
+  fs.createReadStream(path, options || {});
 
-export const convertSrtToVtt = (filePath) => {
+export const convertSrtToVtt = filePath => {
   const vttFileName = changeFileType(filePath, 'vtt');
 
   fs
@@ -67,13 +70,13 @@ export const convertSrtToVtt = (filePath) => {
     .pipe(fs.createWriteStream(vttFileName));
 };
 
-export const deleteFileIfExists = (filePath) => {
+export const deleteFileIfExists = filePath => {
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
   }
 };
 
-export const deleteMovieAndSubtitles = (filePath) => {
+export const deleteMovieAndSubtitles = filePath => {
   const srt = changeFileType(filePath, 'srt');
   const vtt = changeFileType(filePath, 'vtt');
   deleteFileIfExists(filePath);
