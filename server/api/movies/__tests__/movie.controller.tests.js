@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { fetchAllMovies, destroy, stream } from '../movie.controller';
 import { sendResponse } from '../../../utils/helpers';
-import { deleteMovieAndSubtitles, getStream } from '../../../services/file.service';
+import { deleteMovieAndSubtitles } from '../../../services/file.service';
 
 
 jest.mock('../../../services/file.service.js', () => ({

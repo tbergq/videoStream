@@ -42,14 +42,13 @@ export const stream = (req, res) => {
       'Content-Length': chunksize,
       'Content-Type': 'video/mp4',
     });
-    movieStream.pipe(res);
-  } else {
-    res.writeHead(200, {
-      'Content-Length': total,
-      'Content-Type': 'video/mp4',
-    });
-    const movieStreamAll = getStream(filePath);
-    movieStreamAll.pipe(res);
+    return movieStream.pipe(res);
   }
+  res.writeHead(200, {
+    'Content-Length': total,
+    'Content-Type': 'video/mp4',
+  });
+  const movieStreamAll = getStream(filePath);
+  return movieStreamAll.pipe(res);
 };
 

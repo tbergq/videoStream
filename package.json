@@ -47,9 +47,9 @@
   "scripts": {
     "start": "babel-node server/index.js",
     "eslint:fix": "eslint . --fix",
-    "eslint": "eslint .",
+    "eslint": "eslint frontend/ && eslint server/",
     "build": "rimraf dist/ && webpack",
-    "dev": "npm run build && nodemon --exec babel-node server/index.js",
+    "dev": "babel-node scripts/runDev.js",
     "test": "jest",
     "test:watch": "jest --watch"
   },
