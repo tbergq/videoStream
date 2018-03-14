@@ -39,4 +39,10 @@ describe('App', () => {
       expect(response.statusCode).toBe(200);
     });
   });
+  describe('Test the /api/subtitles path', () => {
+    it('Should respond the GET method', async () => {
+      const response = await request(app).get(`/api/subtitles?query=lol`);
+      expect(response.statusCode).toBe(200);
+    });
+  });
 });
