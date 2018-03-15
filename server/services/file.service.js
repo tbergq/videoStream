@@ -1,8 +1,14 @@
 import fs from 'fs';
 import last from 'lodash/last';
 import srt2vtt from 'srt-to-vtt';
+import filetype from 'file-type';
+import os from 'os';
+import { execSync } from 'child_process';
+import dotenv from 'dotenv';
 
-export const MOVIE_PATH = '/Users/tronbe/Movies';
+dotenv.config();
+
+export const { MOVIE_PATH } = process.env;
 
 export const isHiddenFile = filename => filename.indexOf('.') === 0;
 export const isDeleted = filePath => !fs.existsSync(filePath);
@@ -82,4 +88,29 @@ export const deleteMovieAndSubtitles = filePath => {
   deleteFileIfExists(filePath);
   deleteFileIfExists(vtt);
   deleteFileIfExists(srt);
+};
+
+export const writeFileBufferToMoviePath = async (fileBuffer, filePath) => {
+  const { ext } = filetype(fileBuffer);
+  const tmpFilePath = `${os.tmpdir()}/tmpSub.${ext}`;
+  const tmpFilePathExtracted = `${os.tmpdir()}/tmpSubExtracted`;
+  fs.writeFileSync(tmpFilePath, fileBuffer);
+
+  let unpackCommand = '';
+
+  if (ext === 'zip') {
+    unpackCommand = `unzip ${tmpFilePath} -d ${tmpFilePathExtracted}`;
+  } else if (ext === 'rar') {
+    execSync(`mkdir tmpSubExtracted`, { cwd: os.tmpdir() });
+    unpackCommand = `unrar e ${tmpFilePath} ${tmpFilePathExtracted}`;
+  }
+
+  execSync(unpackCommand, { stdio: 'inherit' });
+  const files = fs.readdirSync(tmpFilePathExtracted);
+  const subtitle = files.find(file => getFileType(file) === 'srt');
+  const srtBuffer = fs.readFileSync(`${tmpFilePathExtracted}/${subtitle}`);
+  fs.writeFileSync(changeFileType(filePath, 'srt'), srtBuffer);
+
+  execSync(`rm -rf ${tmpFilePathExtracted}`);
+  fs.unlinkSync(tmpFilePath);
 };

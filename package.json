@@ -25,6 +25,7 @@
     "eslint-plugin-prettier": "^2.6.0",
     "express": "^4.16.2",
     "file-loader": "^1.1.6",
+    "file-type": "^7.6.0",
     "idx": "^2.2.0",
     "image-webpack-loader": "^3.4.2",
     "iso-whatwg-fetch": "^1.0.1",

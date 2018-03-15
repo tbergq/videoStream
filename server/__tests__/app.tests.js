@@ -2,6 +2,7 @@ import request from 'supertest';
 import app from '../app';
 
 jest.mock('../services/file.service.js');
+jest.mock('../services/request');
 
 describe('App', () => {
   it('Should respond with 404 to unknown paths', async () => {
@@ -39,9 +40,17 @@ describe('App', () => {
       expect(response.statusCode).toBe(200);
     });
   });
+
   describe('Test the /api/subtitles path', () => {
     it('Should respond the GET method', async () => {
       const response = await request(app).get(`/api/subtitles?query=lol`);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
+  describe('Test the /api/subtitles/download path', () => {
+    it('Should respond the GET method', async () => {
+      const response = await request(app).get(`/api/subtitles/download`);
       expect(response.statusCode).toBe(200);
     });
   });
