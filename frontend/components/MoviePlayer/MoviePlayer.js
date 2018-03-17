@@ -1,15 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Button } from 'react-bootstrap';
 
-const ButtonContainer = styled.div`
-  margin-top: 10px;
-`;
 
-const back = () => {
-  window.location.href = '/';
-};
 
 const MoviePlayer = ({ movieUrl, subtitleUrl }) => (
   <div>
@@ -26,9 +18,6 @@ const MoviePlayer = ({ movieUrl, subtitleUrl }) => (
         Your browser does not support the video tag.
       </video>
     </div>
-    <ButtonContainer>
-      <Button onClick={back}>Back</Button>
-    </ButtonContainer>
   </div>
 );
 
