@@ -12,6 +12,9 @@ export const getSubtitles = async (req, res) => {
 export const downloadSubtitles = async (req, res) => {
   const { url, moviePath } = req.query;
   const fileBuffer = await getFile(url);
-  writeFileBufferToMoviePath(fileBuffer, moviePath);
-  return sendResponse(200, null, res);
+  const srtPath = writeFileBufferToMoviePath(
+    fileBuffer,
+    decodeURIComponent(moviePath),
+  );
+  return sendResponse(200, { subtitleUrl: encodeURIComponent(srtPath) }, res);
 };

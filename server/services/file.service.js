@@ -90,7 +90,7 @@ export const deleteMovieAndSubtitles = filePath => {
   deleteFileIfExists(srt);
 };
 
-export const writeFileBufferToMoviePath = async (fileBuffer, filePath) => {
+export const writeFileBufferToMoviePath = (fileBuffer, filePath) => {
   const { ext } = filetype(fileBuffer);
   const tmpFilePath = `${os.tmpdir()}/tmpSub.${ext}`;
   const tmpFilePathExtracted = `${os.tmpdir()}/tmpSubExtracted`;
@@ -108,9 +108,15 @@ export const writeFileBufferToMoviePath = async (fileBuffer, filePath) => {
   execSync(unpackCommand, { stdio: 'inherit' });
   const files = fs.readdirSync(tmpFilePathExtracted);
   const subtitle = files.find(file => getFileType(file) === 'srt');
-  const srtBuffer = fs.readFileSync(`${tmpFilePathExtracted}/${subtitle}`);
-  fs.writeFileSync(changeFileType(filePath, 'srt'), srtBuffer);
+  const vttPath = changeFileType(filePath, 'vtt');
+
+  fs
+    .createReadStream(`${tmpFilePathExtracted}/${subtitle}`)
+    .pipe(srt2vtt())
+    .pipe(fs.createWriteStream(vttPath));
 
   execSync(`rm -rf ${tmpFilePathExtracted}`);
   fs.unlinkSync(tmpFilePath);
+
+  return vttPath;
 };

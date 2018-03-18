@@ -6,6 +6,7 @@
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -19,7 +20,6 @@
     "css-loader": "^0.28.8",
     "dotenv": "^5.0.1",
     "dotenv-webpack": "^1.5.5",
-    "eslint": "^4.15.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
@@ -38,6 +38,7 @@
     "nodemon": "^1.14.11",
     "prettier": "^1.11.1",
     "prop-types": "^15.6.0",
+    "querystring": "^0.2.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.0",
     "react-dom": "^16.2.0",

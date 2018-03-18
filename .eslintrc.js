@@ -1,4 +1,5 @@
 module.exports = {
+    "parser": "babel-eslint",
     "extends": [
         "airbnb",
         "prettier",
@@ -20,10 +21,12 @@ module.exports = {
         "beforeEach": true
     },
     "rules": {
+        "strict": 0,
         "react/jsx-filename-extension": 0,
         "no-unused-expressions": 0,
         'import/prefer-default-export': 0,
         "jsx-a11y/media-has-caption": 0,
+        "react/no-did-mount-set-state": 0,
         "prettier/prettier": [
             "error",
             {
