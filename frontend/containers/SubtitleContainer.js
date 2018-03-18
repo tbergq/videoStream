@@ -10,6 +10,7 @@ import {
   downloadSubtitle,
 } from '../redux/actions/SubtitleSearchActions';
 import { getSubtitleSearch, getMoviePlayer } from '../redux/reducers';
+import SubtitleIcon from '../images/subtitles-white.png';
 
 class SubtitleContainer extends React.Component {
   subtitleSelected = url => {
@@ -31,7 +32,9 @@ class SubtitleContainer extends React.Component {
           toggleModal={toggleModal}
           downloadSubtitles={this.subtitleSelected}
         />
-        <FabButton onClick={toggleModal}>test</FabButton>
+        <FabButton onClick={toggleModal}>
+          <img src={SubtitleIcon} alt="Subtitle" />
+        </FabButton>
       </div>
     );
   };
