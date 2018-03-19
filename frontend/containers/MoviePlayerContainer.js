@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import idx from 'idx';
+import last from 'lodash/last';
 
 import MoviePlayer from '../components/MoviePlayer/MoviePlayer';
 import { getMoviePlayer } from '../redux/reducers';
@@ -9,6 +10,7 @@ import ChromeCastContainer from '../containers/ChromeCastContainer';
 
 const MoviePlayerContainer = ({ isCasting, moviePath, subtitleUrl }) => (
   <div>
+    <h3>{last(decodeURIComponent(moviePath).split('/'))}</h3>
     {!isCasting && (
       <MoviePlayer movieUrl={moviePath} subtitleUrl={subtitleUrl} />
     )}
