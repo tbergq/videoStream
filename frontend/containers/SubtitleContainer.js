@@ -18,8 +18,19 @@ class SubtitleContainer extends React.Component {
     this.props.toggleModal();
   };
 
+  toggleModal = () => {
+    this.props.toggleModal();
+    this.props.onModalToggle();
+  };
+
   render = () => {
-    const { subtitleUrl, toggleModal, showModal, ...rest } = this.props;
+    const {
+      subtitleUrl,
+      toggleModal,
+      showModal,
+      onModalToggle,
+      ...rest
+    } = this.props;
 
     if (subtitleUrl) {
       return null;
@@ -29,10 +40,10 @@ class SubtitleContainer extends React.Component {
         <SubtitleModal
           {...rest}
           showModal={showModal}
-          toggleModal={toggleModal}
+          toggleModal={this.toggleModal}
           downloadSubtitles={this.subtitleSelected}
         />
-        <FabButton onClick={toggleModal}>
+        <FabButton onClick={this.toggleModal}>
           <img src={SubtitleIcon} alt="Subtitle" />
         </FabButton>
       </div>
@@ -46,6 +57,7 @@ SubtitleContainer.propTypes = {
   showModal: PropTypes.bool.isRequired,
   downloadSubtitles: PropTypes.func.isRequired,
   moviePath: PropTypes.string.isRequired,
+  onModalToggle: PropTypes.func.isRequired,
 };
 
 const select = state => ({
