@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 
 import CastImage from '../../images/cast.png';
 
+const SPACE_KEY = 32;
 const ChromeCastContainer = styled.div`
   margin-top: 10px;
 `;
@@ -26,6 +27,26 @@ class ChromeCast extends React.Component {
     super();
 
     this.requestSession = this.requestSession.bind(this);
+    this.playOrPause = this.playOrPause.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+  
+  componentDidUpdate() {
+    if(this.props.isCasting) {
+      window.addEventListener('keypress', this.handleKeyPress);
+    } else if (!this.props.isCasting) {
+      window.removeEventListener('keypress', this.handleKeyPress);
+    }
+  }
+
+  handleKeyPress(event) {
+    switch (event.keyCode) {
+      case SPACE_KEY:
+        this.playOrPause();
+        break;
+      default:
+        break;
+    }
   }
 
   async requestSession() {
@@ -39,7 +60,13 @@ class ChromeCast extends React.Component {
     }
   }
 
+  playOrPause() {
+    this.props.playerController.playOrPause();
+  }
+
+
   render() {
+    console.log(this.props);
     return (
       <ChromeCastContainer className="ChromeCast">
         <Button onClick={this.requestSession}>
@@ -48,6 +75,7 @@ class ChromeCast extends React.Component {
         <BackButtonWrapper>
           <Button onClick={back}>Back</Button>
         </BackButtonWrapper>
+        {this.props.isCasting && <BackButtonWrapper><Button onClick={this.playOrPause}>Play/Pause</Button></BackButtonWrapper>}
       </ChromeCastContainer>
     );
   }
