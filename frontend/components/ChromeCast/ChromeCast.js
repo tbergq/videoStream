@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 
 import CastImage from '../../images/cast.png';
+import Timer from './Timer';
+import ChromeCastControls from './ChromeCastControls';
 
-const SPACE_KEY = 32;
 const ChromeCastContainer = styled.div`
   margin-top: 10px;
 `;
@@ -18,34 +19,39 @@ const BackButtonWrapper = styled.span`
   }
 `;
 
+const ButtonContainer = styled('div')([], {
+  display: 'flex',
+  justifyContent: 'stretch',
+});
+
 const back = () => {
   window.location.href = '/';
 };
 
 class ChromeCast extends React.Component {
+  interval = null;
   constructor() {
     super();
 
+    this.state = {
+      currentTime: '00:00',
+    };
+
     this.requestSession = this.requestSession.bind(this);
-    this.playOrPause = this.playOrPause.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
-  
-  componentDidUpdate() {
-    if(this.props.isCasting) {
-      window.addEventListener('keypress', this.handleKeyPress);
-    } else if (!this.props.isCasting) {
-      window.removeEventListener('keypress', this.handleKeyPress);
-    }
   }
 
-  handleKeyPress(event) {
-    switch (event.keyCode) {
-      case SPACE_KEY:
-        this.playOrPause();
-        break;
-      default:
-        break;
+  componentDidUpdate() {
+    if (this.props.isCasting && this.interval === null) {
+      this.interval = setInterval(() => {
+        this.setState({
+          currentTime: this.props.playerController.getFormattedTime(
+            this.props.player.currentTime,
+          ),
+        });
+      }, 1000);
+    } else if (!this.props.isCasting) {
+      clearInterval(this.interval);
+      this.interval = null;
     }
   }
 
@@ -60,22 +66,30 @@ class ChromeCast extends React.Component {
     }
   }
 
-  playOrPause() {
-    this.props.playerController.playOrPause();
-  }
-
-
   render() {
-    console.log(this.props);
     return (
       <ChromeCastContainer className="ChromeCast">
-        <Button onClick={this.requestSession}>
-          <img src={CastImage} alt="Cast" />
-        </Button>
-        <BackButtonWrapper>
-          <Button onClick={back}>Back</Button>
-        </BackButtonWrapper>
-        {this.props.isCasting && <BackButtonWrapper><Button onClick={this.playOrPause}>Play/Pause</Button></BackButtonWrapper>}
+        {this.props.isCasting && (
+          <Timer
+            time={this.state.currentTime}
+            playerController={this.props.playerController}
+            player={this.props.player}
+          />
+        )}
+        <ButtonContainer>
+          <Button onClick={this.requestSession}>
+            <img src={CastImage} alt="Cast" />
+          </Button>
+          <BackButtonWrapper>
+            <Button onClick={back}>Back</Button>
+          </BackButtonWrapper>
+          {this.props.isCasting && (
+            <ChromeCastControls
+              playerController={this.props.playerController}
+              player={this.props.player}
+            />
+          )}
+        </ButtonContainer>
       </ChromeCastContainer>
     );
   }
@@ -86,6 +100,15 @@ ChromeCast.propTypes = {
     requestSession: PropTypes.func.isRequired,
   }).isRequired,
   setUpCastSession: PropTypes.func.isRequired,
+  playerController: PropTypes.shape({
+    playOrPause: PropTypes.func.isRequired,
+    getFormattedTime: PropTypes.func.isRequired,
+    stop: PropTypes.func.isRequired,
+  }).isRequired,
+  player: PropTypes.shape({
+    currentTime: PropTypes.number.isRequired,
+  }).isRequired,
+  isCasting: PropTypes.bool.isRequired,
 };
 
 export default ChromeCast;

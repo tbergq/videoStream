@@ -4,3 +4,4 @@ dist/
 npm-debug.log
 coverage/
 .env
+yarn-error.log
