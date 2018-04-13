@@ -13,17 +13,15 @@ class MoviesContainer extends React.Component {
   }
 
   render() {
-    return [
-      <RefreshMovieList
-        key="refresh-movie-list"
-        fetchMovies={this.props.fetchMovies}
-      />,
-      <MovieList
-        key="movie-list"
-        movies={this.props.movies}
-        deleteMovie={this.props.deleteMovie}
-      />,
-    ];
+    return (
+      <React.Fragment>
+        <RefreshMovieList fetchMovies={this.props.fetchMovies} />
+        <MovieList
+          movies={this.props.movies}
+          deleteMovie={this.props.deleteMovie}
+        />
+      </React.Fragment>
+    );
   }
 }
 

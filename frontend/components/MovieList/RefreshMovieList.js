@@ -1,18 +1,13 @@
 import React from 'react';
-import { Button, Glyphicon } from 'react-bootstrap';
-import styled from 'styled-components';
+import { Glyphicon } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-const ButtonContainer = styled.div`
-  margin-bottom: 10px;
-`;
+import FabButton from '../Buttons/FabButton';
 
 const RefreshMovieList = ({ fetchMovies }) => (
-  <ButtonContainer>
-    <Button bsStyle="primary" onClick={fetchMovies}>
-      <Glyphicon glyph="refresh" />
-    </Button>
-  </ButtonContainer>
+  <FabButton bsStyle="primary" onClick={fetchMovies} title="Refresh movies">
+    <Glyphicon glyph="refresh" />
+  </FabButton>
 );
 
 RefreshMovieList.propTypes = {
