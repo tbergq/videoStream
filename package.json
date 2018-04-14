@@ -63,11 +63,14 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-jest": "^22.1.0",
     "eslint": "^4.15.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.5.1"
+    "eslint-plugin-react": "^7.5.1",
+    "flow": "^0.2.3",
+    "flow-bin": "^0.69.0"
   }
 }
