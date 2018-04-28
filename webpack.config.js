@@ -15,10 +15,11 @@ module.exports = {
     path: paths.DIST,
     filename: '[name].bundle.js',
   },
+  devtool: 'inline-source-map',
   plugins: [new Dotenv()],
   watch: true,
   module: {
-    loaders: [
+    rules: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
       {
