@@ -1,5 +1,5 @@
 import React from 'react';
-import { hydrate } from 'react-dom';
+import { render } from 'react-dom';
 
 import Layout from '../components/Layout';
 import MoviePlayerContainer from '../containers/MoviePlayerContainer';
@@ -10,4 +10,4 @@ const MoviePlayer = () => (
   </Layout>
 );
 
-hydrate(<MoviePlayer />, document.getElementById('root'));
+render(<MoviePlayer />, document.getElementById('root'));
