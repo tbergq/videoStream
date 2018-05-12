@@ -52,13 +52,14 @@
     "styled-components": "^2.4.0",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.6.0"
   },
   "scripts": {
     "start": "babel-node server/index.js",
     "eslint:fix": "eslint . --fix",
     "eslint": "eslint frontend/ && eslint server/",
-    "build": "rimraf dist/ && webpack",
+    "build": "rimraf dist/ && webpack --config webpack.prod.config.js",
     "dev": "babel-node scripts/runDev.js",
     "test": "jest",
     "test:watch": "jest --watch"
