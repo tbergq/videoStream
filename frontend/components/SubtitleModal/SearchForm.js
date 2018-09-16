@@ -17,13 +17,8 @@ export default class SearchForm extends React.Component {
     super(props);
 
     this.state = {
-      query: '',
+      query: props.moviePath,
     };
-  }
-
-  componentDidMount() {
-    const movieName = last(decodeURIComponent(this.props.moviePath).split('/'));
-    this.setState({ query: movieName });
   }
 
   onChange = e => {
