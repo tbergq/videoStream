@@ -7,4 +7,4 @@ execSync('yarn webpack --mode development &', {
   cwd: rootDir,
   stdio: 'inherit',
 });
-execSync('yarn start', { cwd: rootDir, stdio: 'inherit' });
+execSync('yarn dev:server', { cwd: rootDir, stdio: 'inherit' });

@@ -53,7 +53,7 @@ export const readAllMovies = (path = MOVIE_PATH) => {
       recursiveFiles.forEach(item => outFiles.push(item));
     } else if (fileType === 'mkv' || fileType === 'mp4') {
       outFiles.push({
-        name: file,
+        name: file.replace(/\./g, ' '),
         fileType,
         fullPath: `${path}/${file}`,
         subtitleUrl: getSubtitleUrl(`${path}/${file}`),

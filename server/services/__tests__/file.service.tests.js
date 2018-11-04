@@ -70,13 +70,13 @@ describe('File service', () => {
     const movies = readAllMovies('testDir');
     expect(movies).toEqual([
       {
-        name: 'exists.mkv',
+        name: 'exists mkv',
         fileType: 'mkv',
         fullPath: 'testDir/exists.mkv',
         subtitleUrl: 'testDir/exists.vtt',
       },
       {
-        name: 'lol.mp4',
+        name: 'lol mp4',
         fileType: 'mp4',
         fullPath: 'testDir/lol.mp4',
         subtitleUrl: '',
