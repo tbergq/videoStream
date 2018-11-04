@@ -62,7 +62,8 @@
     "build": "rimraf dist/ && webpack --config webpack.prod.config.js",
     "dev": "babel-node scripts/runDev.js",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "dev:server": "yarn run nodemon --verbose --exec yarn run babel-node server/index.js"
   },
   "devDependencies": {
     "babel-preset-flow": "^6.23.0",
