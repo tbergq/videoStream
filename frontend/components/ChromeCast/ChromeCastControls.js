@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Glyphicon } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { MdPlayArrow, MdPause, MdStop } from 'react-icons/md';
 import PropTypes from 'prop-types';
 
 const ButtonWrapper = styled('span')([], {
@@ -52,12 +53,12 @@ export default class ChromeCastControls extends React.Component {
       <React.Fragment>
         <ButtonWrapper>
           <Button onClick={this.playOrPause}>
-            <Glyphicon glyph={this.props.player.isPaused ? 'play' : 'pause'} />
+            {this.props.player.isPaused ? <MdPlayArrow /> : <MdPause />}
           </Button>
         </ButtonWrapper>
         <ButtonWrapper>
           <Button onClick={this.stop}>
-            <Glyphicon glyph="stop" />
+            <MdStop />
           </Button>
         </ButtonWrapper>
       </React.Fragment>
