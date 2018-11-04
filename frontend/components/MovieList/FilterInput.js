@@ -12,9 +12,9 @@ export default function FilterInput({ value, onChange, clear }) {
           onChange={onChange}
           placeholder="Search"
         />
-        <InputGroup.Button>
+        <InputGroup.Append>
           <Button onClick={clear}>X</Button>
-        </InputGroup.Button>
+        </InputGroup.Append>
       </InputGroup>
     </FormGroup>
   );

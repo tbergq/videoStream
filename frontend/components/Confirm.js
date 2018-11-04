@@ -12,7 +12,7 @@ const Confirm = ({ show, close, title, body, successCallback }) => (
 
     <Modal.Footer>
       <Button onClick={close}>Cancel</Button>
-      <Button bsStyle="primary" onClick={successCallback}>
+      <Button variant="primary" onClick={successCallback}>
         Ok
       </Button>
     </Modal.Footer>

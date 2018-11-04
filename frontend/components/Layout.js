@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Col, Row } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 import { injectGlobal } from 'styled-components';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -14,6 +14,7 @@ import reducers from '../redux/reducers';
 injectGlobal`
   .navbar {
     border-radius: 0;
+    margin-bottom: 8px;
   }
 `;
 
@@ -23,11 +24,11 @@ const Layout = ({ children }) => (
   <Provider store={store}>
     <div>
       <Header />
-      <Grid>
+      <Container>
         <Row>
           <Col xs={12}>{children}</Col>
         </Row>
-      </Grid>
+      </Container>
     </div>
   </Provider>
 );

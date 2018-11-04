@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
 const SuggestionList = ({ subtitleSuggestions, downloadSubtitles }) => (
-  <ListGroup componentClass="ul">
+  <ListGroup as="ul">
     {subtitleSuggestions.map(item => (
       <ListGroupItem
         onClick={() => {

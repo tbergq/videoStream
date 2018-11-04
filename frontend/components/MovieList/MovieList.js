@@ -72,7 +72,7 @@ class MovieList extends React.Component {
             />
           </FilterItem>
         </FlexContainer>
-        <ListGroup componentClass="div" className="MovieList">
+        <ListGroup as="div" className="MovieList">
           <TransitionGroup>
             {movies.map(movie => (
               <CSSTransition
