@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tooltip, OverlayTrigger, Button, Glyphicon } from 'react-bootstrap';
+import { Tooltip, OverlayTrigger, Button } from 'react-bootstrap';
 import styled from 'styled-components';
+import { MdDelete } from 'react-icons/md';
 
 import SubtitleImage from '../../images/subtitles.png';
 import Confirm from '../Confirm';
@@ -61,8 +62,8 @@ class MovieListItem extends React.Component {
           {movie.name}
           {this.renderTooltip()}
         </a>
-        <Button bsStyle="danger" onClick={toggleModal}>
-          <Glyphicon glyph="trash" />
+        <Button variant="danger" onClick={toggleModal}>
+          <MdDelete />
         </Button>
         <Confirm
           show={showModal}

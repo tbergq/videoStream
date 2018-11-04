@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import last from 'lodash/last';
-import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import { FormGroup, Badge, FormControl, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 
 const SubmitContainer = styled('span')([], {
@@ -34,14 +33,14 @@ export default class SearchForm extends React.Component {
     return (
       <form onSubmit={this.onSubmit}>
         <FormGroup>
-          <ControlLabel>Movie name</ControlLabel>
+          <Badge>Movie name</Badge>
           <FormControl
             type="text"
             value={this.state.query}
             onChange={this.onChange}
           />
           <SubmitContainer>
-            <Button type="submit" bsStyle="primary">
+            <Button type="submit" variant="primary">
               Search
             </Button>
           </SubmitContainer>

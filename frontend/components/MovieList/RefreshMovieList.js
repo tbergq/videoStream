@@ -1,12 +1,12 @@
 import React from 'react';
-import { Glyphicon } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { MdRefresh } from 'react-icons/md';
 
 import FabButton from '../Buttons/FabButton';
 
 const RefreshMovieList = ({ fetchMovies }) => (
-  <FabButton bsStyle="primary" onClick={fetchMovies} title="Refresh movies">
-    <Glyphicon glyph="refresh" />
+  <FabButton variant="primary" onClick={fetchMovies} title="Refresh movies">
+    <MdRefresh />
   </FabButton>
 );
 
