@@ -6,6 +6,7 @@ import styled, { injectGlobal } from 'styled-components';
 
 import MovieListItem from './MovieListItem';
 import FilterInput from './FilterInput';
+import MoviesContext from '../../context/MoviesContext';
 
 // TODO: Find a way to do this without global styling
 injectGlobal`
@@ -95,4 +96,12 @@ MovieList.propTypes = {
   deleteMovie: PropTypes.func.isRequired,
 };
 
-export default MovieList;
+export default class MovieListWithContext extends React.Component {
+  renderInner = ({ movies, deleteMovie }) => (
+    <MovieList movies={movies} deleteMovie={deleteMovie} />
+  );
+
+  render() {
+    return <MoviesContext.Consumer>{this.renderInner}</MoviesContext.Consumer>;
+  }
+}

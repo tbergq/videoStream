@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { MdRefresh } from 'react-icons/md';
 
 import FabButton from '../Buttons/FabButton';
+import MoviesContext from '../../context/MoviesContext';
 
 const RefreshMovieList = ({ fetchMovies }) => (
   <FabButton variant="primary" onClick={fetchMovies} title="Refresh movies">
@@ -14,4 +15,8 @@ RefreshMovieList.propTypes = {
   fetchMovies: PropTypes.func.isRequired,
 };
 
-export default RefreshMovieList;
+const WithContext = () => (
+  <MoviesContext.Consumer>{RefreshMovieList}</MoviesContext.Consumer>
+);
+
+export default WithContext;

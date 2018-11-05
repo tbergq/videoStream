@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
-import { getMovies } from '../redux/reducers';
-import { fetchMovies, deleteMovie } from '../redux/actions/MoviesActions';
 import MovieList from '../components/MovieList/MovieList';
 import RefreshMovieList from '../components/MovieList/RefreshMovieList';
+import MovieContext from '../context/MoviesContext';
 
 class MoviesContainer extends React.Component {
+  static propTypes = {
+    fetchMovies: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
     this.props.fetchMovies();
   }
@@ -15,29 +17,19 @@ class MoviesContainer extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <RefreshMovieList fetchMovies={this.props.fetchMovies} />
-        <MovieList
-          movies={this.props.movies}
-          deleteMovie={this.props.deleteMovie}
-        />
+        <RefreshMovieList />
+        <MovieList />
       </React.Fragment>
     );
   }
 }
 
-MoviesContainer.propTypes = {
-  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  fetchMovies: PropTypes.func.isRequired,
-  deleteMovie: PropTypes.func.isRequired,
-};
+export default class MoviesContainerWithContext extends React.Component {
+  renderInner = ({ fetchMovies }) => (
+    <MoviesContainer fetchMovies={fetchMovies} />
+  );
 
-const mapStateToProps = state => ({
-  ...getMovies(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchMovies: () => dispatch(fetchMovies()),
-  deleteMovie: moviePath => dispatch(deleteMovie(moviePath)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MoviesContainer);
+  render() {
+    return <MovieContext.Consumer>{this.renderInner}</MovieContext.Consumer>;
+  }
+}

@@ -21,6 +21,7 @@ module.exports = {
         'beforeEach': true
     },
     'rules': {
+        'react/no-multi-comp': 0,
         'strict': 0,
         'react/jsx-filename-extension': 0,
         'no-unused-expressions': 0,
