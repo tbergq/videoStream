@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import MoviePlayerContext from '../../context/MoviePlayerContext';
+
 const SPACE_KEY = 32;
 
 class MoviePlayer extends React.Component {
@@ -46,6 +48,7 @@ class MoviePlayer extends React.Component {
 
   render = () => {
     const { movieUrl, subtitleUrl } = this.props;
+
     return (
       <div>
         <div>
@@ -77,4 +80,27 @@ MoviePlayer.propTypes = {
   deactivateSpaceListener: PropTypes.bool.isRequired,
 };
 
-export default MoviePlayer;
+export default class MoviePlayerWithContext extends React.Component {
+  static propTypes = {
+    deactivateSpaceListener: PropTypes.bool.isRequired,
+  };
+
+  renderInner = state => {
+    const { moviePath, subtitleUrl, ...rest } = state;
+    console.log({ moviePath, subtitleUrl, ...rest });
+    return (
+      <MoviePlayer
+        {...this.props}
+        movieUrl={moviePath}
+        subtitleUrl={subtitleUrl}
+      />
+    );
+  };
+  render() {
+    return (
+      <MoviePlayerContext.Consumer>
+        {this.renderInner}
+      </MoviePlayerContext.Consumer>
+    );
+  }
+}

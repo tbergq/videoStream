@@ -22,6 +22,7 @@ module.exports = {
     },
     'rules': {
         'react/no-multi-comp': 0,
+        'react/no-unused-state': 0,
         'strict': 0,
         'react/jsx-filename-extension': 0,
         'no-unused-expressions': 0,

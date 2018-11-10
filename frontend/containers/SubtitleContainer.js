@@ -5,15 +5,17 @@ import PropTypes from 'prop-types';
 import FabButton from '../components/Buttons/FabButton';
 import withModal from '../components/withModal';
 import SubtitleModal from '../components/SubtitleModal/SubtitleModal';
-import {
-  fetchSubtitleSuggestions,
-  downloadSubtitle,
-} from '../redux/actions/SubtitleSearchActions';
-import { getSubtitleSearch, getMoviePlayer } from '../redux/reducers';
+import { fetchSubtitleSuggestions } from '../redux/actions/SubtitleSearchActions';
+import { getSubtitleSearch } from '../redux/reducers';
 import SubtitleIcon from '../images/subtitles-white.png';
+import MoviePlayerContext from '../context/MoviePlayerContext';
 
 class SubtitleContainer extends React.Component {
+  componentDidMount() {
+    console.log(this.props);
+  }
   subtitleSelected = url => {
+    console.log('download', url);
     this.props.downloadSubtitles(url, this.props.moviePath);
     this.props.toggleModal();
   };
@@ -23,7 +25,7 @@ class SubtitleContainer extends React.Component {
     this.props.onModalToggle();
   };
 
-  render = () => {
+  render() {
     const {
       subtitleUrl,
       toggleModal,
@@ -48,7 +50,7 @@ class SubtitleContainer extends React.Component {
         </FabButton>
       </div>
     );
-  };
+  }
 }
 
 SubtitleContainer.propTypes = {
@@ -61,14 +63,32 @@ SubtitleContainer.propTypes = {
 };
 
 const select = state => ({
-  ...getMoviePlayer(state),
   ...getSubtitleSearch(state),
 });
 
 const actions = dispatch => ({
   fetchSubtitleSuggestions: query => dispatch(fetchSubtitleSuggestions(query)),
-  downloadSubtitles: (url, moviePath) =>
-    dispatch(downloadSubtitle(url, moviePath)),
 });
 
-export default connect(select, actions)(withModal(SubtitleContainer));
+class SubtitleContainerWithContext extends React.Component {
+  renderInner = ({ downloadSubtitle, moviePath, subtitleUrl }) => (
+    <SubtitleContainer
+      {...this.props}
+      downloadSubtitles={downloadSubtitle}
+      moviePath={moviePath}
+      subtitleUrl={subtitleUrl}
+    />
+  );
+
+  render() {
+    return (
+      <MoviePlayerContext.Consumer>
+        {this.renderInner}
+      </MoviePlayerContext.Consumer>
+    );
+  }
+}
+
+export default connect(select, actions)(
+  withModal(SubtitleContainerWithContext),
+);

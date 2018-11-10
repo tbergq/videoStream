@@ -4,7 +4,7 @@ export default async function Http(url, config) {
     const json = await response.json();
     return json;
   } catch (error) {
-    console.error(error);
+    console.error(error); // eslint-disable-line no-console
     throw error;
   }
 }
