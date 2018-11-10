@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import last from 'lodash/last';
 
 import SearchForm from './SearchForm';
 import SuggestionList from './SuggestionList';
@@ -9,15 +8,13 @@ import SuggestionList from './SuggestionList';
 const SubtitleModal = ({
   showModal,
   toggleModal,
-  moviePath,
   fetchSubtitleSuggestions,
   subtitleSuggestions,
   isLoading,
   downloadSubtitles,
+  movieName,
 }) => {
-  const path = last(decodeURIComponent(moviePath).split('/'))
-    .split('.')
-    .join(' ');
+  const path = movieName;
   return (
     <Modal show={showModal} bsSize="large">
       <Modal.Header>
@@ -42,7 +39,7 @@ const SubtitleModal = ({
 SubtitleModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  moviePath: PropTypes.string.isRequired,
+  movieName: PropTypes.string.isRequired,
   fetchSubtitleSuggestions: PropTypes.func.isRequired,
   subtitleSuggestions: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,

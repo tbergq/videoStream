@@ -1,21 +1,20 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import querystring from 'querystring';
 
 import FabButton from '../components/Buttons/FabButton';
 import withModal from '../components/withModal';
 import SubtitleModal from '../components/SubtitleModal/SubtitleModal';
-import { fetchSubtitleSuggestions } from '../redux/actions/SubtitleSearchActions';
-import { getSubtitleSearch } from '../redux/reducers';
 import SubtitleIcon from '../images/subtitles-white.png';
 import MoviePlayerContext from '../context/MoviePlayerContext';
+import Http from '../utils/Http';
 
 class SubtitleContainer extends React.Component {
-  componentDidMount() {
-    console.log(this.props);
-  }
+  state = {
+    subtitles: [],
+  };
+
   subtitleSelected = url => {
-    console.log('download', url);
     this.props.downloadSubtitles(url, this.props.moviePath);
     this.props.toggleModal();
   };
@@ -25,14 +24,15 @@ class SubtitleContainer extends React.Component {
     this.props.onModalToggle();
   };
 
+  getSubtitleSuggestions = async query => {
+    const response = await Http(
+      `/api/subtitles?${querystring.stringify({ query })}`,
+    );
+    this.setState({ subtitles: response });
+  };
+
   render() {
-    const {
-      subtitleUrl,
-      toggleModal,
-      showModal,
-      onModalToggle,
-      ...rest
-    } = this.props;
+    const { subtitleUrl, showModal, movieName } = this.props;
 
     if (subtitleUrl) {
       return null;
@@ -40,10 +40,12 @@ class SubtitleContainer extends React.Component {
     return (
       <div>
         <SubtitleModal
-          {...rest}
           showModal={showModal}
           toggleModal={this.toggleModal}
           downloadSubtitles={this.subtitleSelected}
+          fetchSubtitleSuggestions={this.getSubtitleSuggestions}
+          subtitleSuggestions={this.state.subtitles}
+          movieName={movieName}
         />
         <FabButton onClick={this.toggleModal}>
           <img src={SubtitleIcon} alt="Subtitle" />
@@ -60,23 +62,17 @@ SubtitleContainer.propTypes = {
   downloadSubtitles: PropTypes.func.isRequired,
   moviePath: PropTypes.string.isRequired,
   onModalToggle: PropTypes.func.isRequired,
+  movieName: PropTypes.string.isRequired,
 };
 
-const select = state => ({
-  ...getSubtitleSearch(state),
-});
-
-const actions = dispatch => ({
-  fetchSubtitleSuggestions: query => dispatch(fetchSubtitleSuggestions(query)),
-});
-
 class SubtitleContainerWithContext extends React.Component {
-  renderInner = ({ downloadSubtitle, moviePath, subtitleUrl }) => (
+  renderInner = ({ downloadSubtitle, moviePath, subtitleUrl, movieName }) => (
     <SubtitleContainer
       {...this.props}
       downloadSubtitles={downloadSubtitle}
       moviePath={moviePath}
       subtitleUrl={subtitleUrl}
+      movieName={movieName}
     />
   );
 
@@ -89,6 +85,4 @@ class SubtitleContainerWithContext extends React.Component {
   }
 }
 
-export default connect(select, actions)(
-  withModal(SubtitleContainerWithContext),
-);
+export default withModal(SubtitleContainerWithContext);
