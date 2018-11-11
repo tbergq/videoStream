@@ -1,28 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import isUndefined from 'lodash/isUndefined';
 
-import { getChromeCastReducer } from '../redux/reducers';
-import {
-  setCastContext,
-  setUpCastSession,
-  startCast,
-  castingStopped,
-} from '../redux/actions/ChromeCastActions';
 import ChromeCast from '../components/ChromeCast/ChromeCast';
+import { withChromeCastContext } from '../context/ChromeCastContext';
 
 class ChromeCastContainer extends React.Component {
   componentDidMount() {
     const interval = setInterval(() => {
-      if (!isUndefined(cast)) {
+      if (cast != null) {
         this.initializeCastApi();
         clearInterval(interval);
       }
     }, 250);
   }
 
-  initializeCastApi() {
+  initializeCastApi = () => {
+    const { movieUrl, subtitleUrl } = this.props;
     const castContext = cast.framework.CastContext.getInstance();
 
     castContext.setOptions({
@@ -36,6 +29,8 @@ class ChromeCastContainer extends React.Component {
         console.log('cast state is', event.castState);
         if (event.castState === 'CONNECTED') {
           this.props.startCast(
+            movieUrl,
+            subtitleUrl,
             cast.framework.CastContext.getInstance().getCurrentSession(),
           );
         } else if (event.castState === 'NOT_CONNECTED') {
@@ -45,25 +40,18 @@ class ChromeCastContainer extends React.Component {
     );
 
     this.props.setCastContext(castContext);
-  }
+  };
 
   render() {
-    return (
-      <div>{this.props.castContext && <ChromeCast {...this.props} />}</div>
-    );
+    return <div>{this.props.castContext && <ChromeCast />}</div>;
   }
 }
 
-const mapStateToProps = state => ({
-  ...getChromeCastReducer(state),
-});
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  setCastContext: castContext => dispatch(setCastContext(castContext)),
-  setUpCastSession: () => dispatch(setUpCastSession()),
-  startCast: session =>
-    dispatch(startCast(ownProps.movieUrl, ownProps.subtitleUrl, session)),
-  castingStopped: () => dispatch(castingStopped()),
+const select = state => ({
+  setCastContext: state.setCastContext,
+  startCast: state.startCast,
+  castingStopped: state.castingStopped,
+  castContext: state.castContext,
 });
 
 ChromeCastContainer.propTypes = {
@@ -76,6 +64,4 @@ ChromeCastContainer.propTypes = {
   castingStopped: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  ChromeCastContainer,
-);
+export default withChromeCastContext(select)(ChromeCastContainer);

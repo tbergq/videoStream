@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import idx from 'idx';
 
 import MoviePlayer from '../components/MoviePlayer/MoviePlayer';
 import ChromeCastContainer from '../containers/ChromeCastContainer';
 import SubtitleContainer from '../containers/SubtitleContainer';
 import MoviePlayerContext from '../context/MoviePlayerContext';
+import { withChromeCastContext } from '../context/ChromeCastContext';
 
 class MoviePlayerContainer extends React.Component {
   constructor(props) {
@@ -48,8 +47,8 @@ MoviePlayerContainer.propTypes = {
   isCasting: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-  isCasting: idx(state, _ => _.chromeCast.isCasting),
+const select = state => ({
+  isCasting: state.isCasting,
 });
 
-export default connect(mapStateToProps)(MoviePlayerContainer);
+export default withChromeCastContext(select)(MoviePlayerContainer);
