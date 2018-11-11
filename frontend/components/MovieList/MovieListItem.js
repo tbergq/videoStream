@@ -7,29 +7,27 @@ import { MdDelete } from 'react-icons/md';
 import SubtitleImage from '../../images/subtitles.png';
 import Confirm from '../Confirm';
 import withModal from '../withModal';
+import { withMoviesContext } from '../../context/MoviesContext';
 
-const SubtitleContainer = styled.span`
-  margin-left: 8px;
-`;
+const SubtitleContainer = styled('span')([], {
+  marginLeft: '8px',
+});
 
-const MovieListItemContainer = styled.div`
-  display: flex;
-`;
+const MovieListItemContainer = styled('div')([], {
+  display: 'flex',
+});
+
+const StyledLink = styled('a')([], {
+  flex: 1,
+});
 
 class MovieListItem extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.renderTooltip = this.renderTooltip.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-  }
-
-  deleteItem() {
+  deleteItem = () => {
     this.props.deleteMovie(this.props.movie.fullPath);
     this.props.toggleModal();
-  }
+  };
 
-  renderTooltip() {
+  renderTooltip = () => {
     const { movie: { subtitleUrl, fullPath } } = this.props;
 
     if (subtitleUrl) {
@@ -45,14 +43,13 @@ class MovieListItem extends React.Component {
       );
     }
     return null;
-  }
+  };
 
   render() {
     const { movie, toggleModal, showModal } = this.props;
     return (
       <MovieListItemContainer>
-        <a
-          style={{ flex: 1 }}
+        <StyledLink
           className="list-group-item"
           key={movie.fullPath}
           href={`/movie-player?movie=${encodeURIComponent(
@@ -61,7 +58,7 @@ class MovieListItem extends React.Component {
         >
           {movie.name}
           {this.renderTooltip()}
-        </a>
+        </StyledLink>
         <Button variant="danger" onClick={toggleModal}>
           <MdDelete />
         </Button>
@@ -88,4 +85,8 @@ MovieListItem.propTypes = {
   deleteMovie: PropTypes.func.isRequired,
 };
 
-export default withModal(MovieListItem);
+const select = state => ({
+  deleteMovie: state.deleteMovie,
+});
+
+export default withMoviesContext(select)(withModal(MovieListItem));

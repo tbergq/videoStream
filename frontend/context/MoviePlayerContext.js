@@ -4,6 +4,7 @@ import idx from 'idx';
 import querystring from 'querystring';
 
 import Http from '../utils/Http';
+import withContext from './withContext';
 
 const preloadedState = idx(window, _ => _.__PRELOADED_STATE__.moviePlayer); // eslint-disable-line
 
@@ -31,7 +32,6 @@ class Provider extends React.Component {
       ...preloadedState,
       downloadSubtitle: this.downloadSubtitle,
     };
-    console.log(this.state);
   }
 
   downloadSubtitle = async (url, moviePath) => {
@@ -55,5 +55,7 @@ class Provider extends React.Component {
     );
   }
 }
+
+export const withMoviePlayerContext = select => withContext(select, Consumer);
 
 export default { Provider, Consumer };

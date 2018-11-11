@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ChromeCast from '../components/ChromeCast/ChromeCast';
 import { withChromeCastContext } from '../context/ChromeCastContext';
+import { withMoviePlayerContext } from '../context/MoviePlayerContext';
 
 class ChromeCastContainer extends React.Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class ChromeCastContainer extends React.Component {
   }
 
   initializeCastApi = () => {
-    const { movieUrl, subtitleUrl } = this.props;
+    const { moviePath, subtitleUrl } = this.props;
     const castContext = cast.framework.CastContext.getInstance();
 
     castContext.setOptions({
@@ -26,10 +27,10 @@ class ChromeCastContainer extends React.Component {
     castContext.addEventListener(
       cast.framework.CastContextEventType.CAST_STATE_CHANGED,
       event => {
-        console.log('cast state is', event.castState);
+        // console.log('cast state is', event.castState);
         if (event.castState === 'CONNECTED') {
           this.props.startCast(
-            movieUrl,
+            moviePath,
             subtitleUrl,
             cast.framework.CastContext.getInstance().getCurrentSession(),
           );
@@ -43,7 +44,11 @@ class ChromeCastContainer extends React.Component {
   };
 
   render() {
-    return <div>{this.props.castContext && <ChromeCast />}</div>;
+    return (
+      <React.Fragment>
+        {this.props.castContext && <ChromeCast />}
+      </React.Fragment>
+    );
   }
 }
 
@@ -55,7 +60,7 @@ const select = state => ({
 });
 
 ChromeCastContainer.propTypes = {
-  movieUrl: PropTypes.string.isRequired,
+  moviePath: PropTypes.string.isRequired,
   subtitleUrl: PropTypes.string.isRequired,
   setCastContext: PropTypes.func.isRequired,
   castContext: PropTypes.object, //eslint-disable-line
@@ -64,4 +69,7 @@ ChromeCastContainer.propTypes = {
   castingStopped: PropTypes.func.isRequired,
 };
 
-export default withChromeCastContext(select)(ChromeCastContainer);
+export default withMoviePlayerContext(({ moviePath, subtitleUrl }) => ({
+  moviePath,
+  subtitleUrl,
+}))(withChromeCastContext(select)(ChromeCastContainer));

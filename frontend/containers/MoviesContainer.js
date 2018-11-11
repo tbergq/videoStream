@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import MovieList from '../components/MovieList/MovieList';
 import RefreshMovieList from '../components/MovieList/RefreshMovieList';
-import MovieContext from '../context/MoviesContext';
+import { withMoviesContext } from '../context/MoviesContext';
 
 class MoviesContainer extends React.Component {
   static propTypes = {
@@ -24,12 +24,8 @@ class MoviesContainer extends React.Component {
   }
 }
 
-export default class MoviesContainerWithContext extends React.Component {
-  renderInner = ({ fetchMovies }) => (
-    <MoviesContainer fetchMovies={fetchMovies} />
-  );
+const select = state => ({
+  fetchMovies: state.fetchMovies,
+});
 
-  render() {
-    return <MovieContext.Consumer>{this.renderInner}</MovieContext.Consumer>;
-  }
-}
+export default withMoviesContext(select)(MoviesContainer);

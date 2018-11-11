@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Http from '../utils/Http';
+import withContext from './withContext';
 
 const defaultState = {
   movies: [],
@@ -51,5 +52,7 @@ class Provider extends React.Component {
     );
   }
 }
+
+export const withMoviesContext = select => withContext(select, Consumer);
 
 export default { Provider, Consumer };

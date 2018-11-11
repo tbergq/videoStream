@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import withContext from './withContext';
 
 const noop = () => {};
 const serverAddress = get(
@@ -76,7 +77,6 @@ class Provider extends React.Component {
     const mediaInfo = setupMediaInfo(
       `http://${serverAddress}/api/movies/stream/${mediaUrl}`,
     );
-    console.log('mediaInfo', mediaInfo);
     const request = new chrome.cast.media.LoadRequest(mediaInfo);
 
     if (subtitleUrl) {
@@ -118,16 +118,6 @@ class Provider extends React.Component {
   }
 }
 
-export const withChromeCastContext = select => Component =>
-  class WithChromeCastContext extends React.Component {
-    renderInner = state => {
-      const stateProps = select(state);
-      return <Component {...this.props} {...stateProps} />;
-    };
-
-    render() {
-      return <Consumer>{this.renderInner}</Consumer>;
-    }
-  };
+export const withChromeCastContext = select => withContext(select, Consumer);
 
 export default { Provider, Consumer };

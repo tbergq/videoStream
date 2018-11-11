@@ -6,7 +6,7 @@ import FabButton from '../components/Buttons/FabButton';
 import withModal from '../components/withModal';
 import SubtitleModal from '../components/SubtitleModal/SubtitleModal';
 import SubtitleIcon from '../images/subtitles-white.png';
-import MoviePlayerContext from '../context/MoviePlayerContext';
+import { withMoviePlayerContext } from '../context/MoviePlayerContext';
 import Http from '../utils/Http';
 
 class SubtitleContainer extends React.Component {
@@ -65,24 +65,11 @@ SubtitleContainer.propTypes = {
   movieName: PropTypes.string.isRequired,
 };
 
-class SubtitleContainerWithContext extends React.Component {
-  renderInner = ({ downloadSubtitle, moviePath, subtitleUrl, movieName }) => (
-    <SubtitleContainer
-      {...this.props}
-      downloadSubtitles={downloadSubtitle}
-      moviePath={moviePath}
-      subtitleUrl={subtitleUrl}
-      movieName={movieName}
-    />
-  );
+const select = ({ downloadSubtitle, moviePath, subtitleUrl, movieName }) => ({
+  downloadSubtitle,
+  moviePath,
+  subtitleUrl,
+  movieName,
+});
 
-  render() {
-    return (
-      <MoviePlayerContext.Consumer>
-        {this.renderInner}
-      </MoviePlayerContext.Consumer>
-    );
-  }
-}
-
-export default withModal(SubtitleContainerWithContext);
+export default withMoviePlayerContext(select)(withModal(SubtitleContainer));

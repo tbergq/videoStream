@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import MoviePlayer from '../components/MoviePlayer/MoviePlayer';
 import ChromeCastContainer from '../containers/ChromeCastContainer';
 import SubtitleContainer from '../containers/SubtitleContainer';
-import MoviePlayerContext from '../context/MoviePlayerContext';
+import { withMoviePlayerContext } from '../context/MoviePlayerContext';
 import { withChromeCastContext } from '../context/ChromeCastContext';
 
 class MoviePlayerContainer extends React.Component {
@@ -20,35 +20,30 @@ class MoviePlayerContainer extends React.Component {
     this.setState(state => ({ isModalOpen: !state.isModalOpen }));
   };
 
-  renderInner = ({ moviePath, subtitleUrl, movieName }) => {
-    const { isCasting } = this.props;
+  render() {
+    const { isCasting, movieName } = this.props;
     return (
       <div>
         <h3>{movieName}</h3>
         {!isCasting && (
           <MoviePlayer deactivateSpaceListener={this.state.isModalOpen} />
         )}
-        <ChromeCastContainer movieUrl={moviePath} subtitleUrl={subtitleUrl} />
+        <ChromeCastContainer />
         <SubtitleContainer onModalToggle={this.toggleIsModalOpen} />
       </div>
-    );
-  };
-
-  render() {
-    return (
-      <MoviePlayerContext.Consumer>
-        {this.renderInner}
-      </MoviePlayerContext.Consumer>
     );
   }
 }
 
 MoviePlayerContainer.propTypes = {
   isCasting: PropTypes.bool.isRequired,
+  movieName: PropTypes.string.isRequired,
 };
 
 const select = state => ({
   isCasting: state.isCasting,
 });
 
-export default withChromeCastContext(select)(MoviePlayerContainer);
+export default withMoviePlayerContext(({ movieName }) => ({
+  movieName,
+}))(withChromeCastContext(select)(MoviePlayerContainer));

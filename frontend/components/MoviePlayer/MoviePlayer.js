@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MoviePlayerContext from '../../context/MoviePlayerContext';
+import { withMoviePlayerContext } from '../../context/MoviePlayerContext';
 
 const SPACE_KEY = 32;
 
@@ -32,7 +32,6 @@ class MoviePlayer extends React.Component {
   };
 
   startStopVideo = () => {
-    console.log('test', this.props.deactivateSpaceListener);
     if (this.props.deactivateSpaceListener) {
       return;
     }
@@ -46,8 +45,8 @@ class MoviePlayer extends React.Component {
     }
   };
 
-  render = () => {
-    const { movieUrl, subtitleUrl } = this.props;
+  render() {
+    const { moviePath, subtitleUrl } = this.props;
 
     return (
       <div>
@@ -58,7 +57,7 @@ class MoviePlayer extends React.Component {
               this.video = video;
             }}
           >
-            <source src={`/api/movies/stream/${movieUrl}`} type="video/mp4" />
+            <source src={`/api/movies/stream/${moviePath}`} type="video/mp4" />
             {subtitleUrl && (
               <track
                 src={`/api/movies/stream/${subtitleUrl}`}
@@ -71,36 +70,18 @@ class MoviePlayer extends React.Component {
         </div>
       </div>
     );
-  };
+  }
 }
 
 MoviePlayer.propTypes = {
-  movieUrl: PropTypes.string.isRequired,
+  moviePath: PropTypes.string.isRequired,
   subtitleUrl: PropTypes.string.isRequired,
   deactivateSpaceListener: PropTypes.bool.isRequired,
 };
 
-export default class MoviePlayerWithContext extends React.Component {
-  static propTypes = {
-    deactivateSpaceListener: PropTypes.bool.isRequired,
-  };
+const select = ({ moviePath, subtitleUrl }) => ({
+  moviePath,
+  subtitleUrl,
+});
 
-  renderInner = state => {
-    const { moviePath, subtitleUrl, ...rest } = state;
-    console.log({ moviePath, subtitleUrl, ...rest });
-    return (
-      <MoviePlayer
-        {...this.props}
-        movieUrl={moviePath}
-        subtitleUrl={subtitleUrl}
-      />
-    );
-  };
-  render() {
-    return (
-      <MoviePlayerContext.Consumer>
-        {this.renderInner}
-      </MoviePlayerContext.Consumer>
-    );
-  }
-}
+export default withMoviePlayerContext(select)(MoviePlayer);

@@ -61,7 +61,7 @@ class ChromeCast extends React.Component {
       await castContext.requestSession();
       setUpCastSession();
     } catch (err) {
-      console.error(err);
+      console.error(err); // eslint-disable-line no-console
     }
   };
 
