@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 import CastImage from '../../images/cast.png';
 import Timer from './Timer';
 import ChromeCastControls from './ChromeCastControls';
+import { withChromeCastContext } from '../../context/ChromeCastContext';
 
 const ChromeCastContainer = styled.div`
   margin-top: 10px;
@@ -30,14 +31,12 @@ const back = () => {
 
 class ChromeCast extends React.Component {
   interval = null;
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       currentTime: '00:00',
     };
-
-    this.requestSession = this.requestSession.bind(this);
   }
 
   componentDidUpdate() {
@@ -55,16 +54,16 @@ class ChromeCast extends React.Component {
     }
   }
 
-  async requestSession() {
+  requestSession = async () => {
     const { castContext, setUpCastSession } = this.props;
 
     try {
       await castContext.requestSession();
       setUpCastSession();
     } catch (err) {
-      console.error(err);
+      console.error(err); // eslint-disable-line no-console
     }
-  }
+  };
 
   render() {
     return (
@@ -111,4 +110,12 @@ ChromeCast.propTypes = {
   isCasting: PropTypes.bool.isRequired,
 };
 
-export default ChromeCast;
+const select = state => ({
+  castContext: state.castContext,
+  setUpCastSession: state.setUpCastSession,
+  playerController: state.playerController,
+  player: state.player,
+  isCasting: state.isCasting,
+});
+
+export default withChromeCastContext(select)(ChromeCast);

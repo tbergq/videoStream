@@ -1,18 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import querystring from 'querystring';
 
 import FabButton from '../components/Buttons/FabButton';
 import withModal from '../components/withModal';
 import SubtitleModal from '../components/SubtitleModal/SubtitleModal';
-import {
-  fetchSubtitleSuggestions,
-  downloadSubtitle,
-} from '../redux/actions/SubtitleSearchActions';
-import { getSubtitleSearch, getMoviePlayer } from '../redux/reducers';
 import SubtitleIcon from '../images/subtitles-white.png';
+import { withMoviePlayerContext } from '../context/MoviePlayerContext';
+import Http from '../utils/Http';
 
 class SubtitleContainer extends React.Component {
+  state = {
+    subtitles: [],
+  };
+
   subtitleSelected = url => {
     this.props.downloadSubtitles(url, this.props.moviePath);
     this.props.toggleModal();
@@ -23,14 +24,15 @@ class SubtitleContainer extends React.Component {
     this.props.onModalToggle();
   };
 
-  render = () => {
-    const {
-      subtitleUrl,
-      toggleModal,
-      showModal,
-      onModalToggle,
-      ...rest
-    } = this.props;
+  getSubtitleSuggestions = async query => {
+    const response = await Http(
+      `/api/subtitles?${querystring.stringify({ query })}`,
+    );
+    this.setState({ subtitles: response });
+  };
+
+  render() {
+    const { subtitleUrl, showModal, movieName } = this.props;
 
     if (subtitleUrl) {
       return null;
@@ -38,17 +40,19 @@ class SubtitleContainer extends React.Component {
     return (
       <div>
         <SubtitleModal
-          {...rest}
           showModal={showModal}
           toggleModal={this.toggleModal}
           downloadSubtitles={this.subtitleSelected}
+          fetchSubtitleSuggestions={this.getSubtitleSuggestions}
+          subtitleSuggestions={this.state.subtitles}
+          movieName={movieName}
         />
         <FabButton onClick={this.toggleModal}>
           <img src={SubtitleIcon} alt="Subtitle" />
         </FabButton>
       </div>
     );
-  };
+  }
 }
 
 SubtitleContainer.propTypes = {
@@ -58,17 +62,14 @@ SubtitleContainer.propTypes = {
   downloadSubtitles: PropTypes.func.isRequired,
   moviePath: PropTypes.string.isRequired,
   onModalToggle: PropTypes.func.isRequired,
+  movieName: PropTypes.string.isRequired,
 };
 
-const select = state => ({
-  ...getMoviePlayer(state),
-  ...getSubtitleSearch(state),
+const select = ({ downloadSubtitle, moviePath, subtitleUrl, movieName }) => ({
+  downloadSubtitle,
+  moviePath,
+  subtitleUrl,
+  movieName,
 });
 
-const actions = dispatch => ({
-  fetchSubtitleSuggestions: query => dispatch(fetchSubtitleSuggestions(query)),
-  downloadSubtitles: (url, moviePath) =>
-    dispatch(downloadSubtitle(url, moviePath)),
-});
-
-export default connect(select, actions)(withModal(SubtitleContainer));
+export default withMoviePlayerContext(select)(withModal(SubtitleContainer));

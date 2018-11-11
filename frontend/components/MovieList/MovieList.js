@@ -6,6 +6,7 @@ import styled, { injectGlobal } from 'styled-components';
 
 import MovieListItem from './MovieListItem';
 import FilterInput from './FilterInput';
+import { withMoviesContext } from '../../context/MoviesContext';
 
 // TODO: Find a way to do this without global styling
 injectGlobal`
@@ -58,7 +59,6 @@ class MovieList extends React.Component {
   clear = () => this.setState({ filter: '' });
 
   render() {
-    const { deleteMovie } = this.props;
     const movies = this.getMovies() || [];
 
     return (
@@ -80,7 +80,7 @@ class MovieList extends React.Component {
                 timeout={250}
                 classNames="fade"
               >
-                <MovieListItem movie={movie} deleteMovie={deleteMovie} />
+                <MovieListItem movie={movie} />
               </CSSTransition>
             ))}
           </TransitionGroup>
@@ -92,7 +92,10 @@ class MovieList extends React.Component {
 
 MovieList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  deleteMovie: PropTypes.func.isRequired,
 };
 
-export default MovieList;
+const select = state => ({
+  movies: state.movies,
+  deleteMovie: state.deleteMovie,
+});
+export default withMoviesContext(select)(MovieList);

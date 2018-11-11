@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import idx from 'idx';
-import last from 'lodash/last';
 
 import MoviePlayer from '../components/MoviePlayer/MoviePlayer';
-import { getMoviePlayer } from '../redux/reducers';
 import ChromeCastContainer from '../containers/ChromeCastContainer';
 import SubtitleContainer from '../containers/SubtitleContainer';
+import { withMoviePlayerContext } from '../context/MoviePlayerContext';
+import { withChromeCastContext } from '../context/ChromeCastContext';
 
 class MoviePlayerContainer extends React.Component {
   constructor(props) {
@@ -20,37 +18,32 @@ class MoviePlayerContainer extends React.Component {
 
   toggleIsModalOpen = () => {
     this.setState(state => ({ isModalOpen: !state.isModalOpen }));
-    console.log('movie player toggle');
   };
 
-  render = () => {
-    const { isCasting, moviePath, subtitleUrl } = this.props;
+  render() {
+    const { isCasting, movieName } = this.props;
     return (
       <div>
-        <h3>{last(decodeURIComponent(moviePath).split('/'))}</h3>
+        <h3>{movieName}</h3>
         {!isCasting && (
-          <MoviePlayer
-            movieUrl={moviePath}
-            subtitleUrl={subtitleUrl}
-            deactivateSpaceListener={this.state.isModalOpen}
-          />
+          <MoviePlayer deactivateSpaceListener={this.state.isModalOpen} />
         )}
-        <ChromeCastContainer movieUrl={moviePath} subtitleUrl={subtitleUrl} />
+        <ChromeCastContainer />
         <SubtitleContainer onModalToggle={this.toggleIsModalOpen} />
       </div>
     );
-  };
+  }
 }
 
 MoviePlayerContainer.propTypes = {
-  moviePath: PropTypes.string.isRequired,
-  subtitleUrl: PropTypes.string.isRequired,
   isCasting: PropTypes.bool.isRequired,
+  movieName: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
-  ...getMoviePlayer(state),
-  isCasting: idx(state, _ => _.chromeCast.isCasting),
+const select = state => ({
+  isCasting: state.isCasting,
 });
 
-export default connect(mapStateToProps)(MoviePlayerContainer);
+export default withMoviePlayerContext(({ movieName }) => ({
+  movieName,
+}))(withChromeCastContext(select)(MoviePlayerContainer));

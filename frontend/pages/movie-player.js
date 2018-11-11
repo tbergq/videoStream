@@ -3,11 +3,17 @@ import { render } from 'react-dom';
 
 import Layout from '../components/Layout';
 import MoviePlayerContainer from '../containers/MoviePlayerContainer';
+import MoviePlayerContext from '../context/MoviePlayerContext';
+import ChromeCastContext from '../context/ChromeCastContext';
 
 const MoviePlayer = () => (
-  <Layout>
-    <MoviePlayerContainer />
-  </Layout>
+  <MoviePlayerContext.Provider>
+    <ChromeCastContext.Provider>
+      <Layout>
+        <MoviePlayerContainer />
+      </Layout>
+    </ChromeCastContext.Provider>
+  </MoviePlayerContext.Provider>
 );
 
 render(<MoviePlayer />, document.getElementById('root'));

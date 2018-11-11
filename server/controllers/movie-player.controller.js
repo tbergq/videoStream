@@ -1,14 +1,17 @@
 import getHtml from '../utils/get-html';
 import { getPrivateIp } from '../services/nework.service';
+import { last, replaceDotsWithSpace } from '../utils/helpers';
 
 const port = process.env.PORT || 3300;
 
 export default async function moviePlayerController(req, res) {
   const { movie, subtitleUrl } = req.query;
   const ip = await getPrivateIp();
+
   const initialState = {
     moviePlayer: {
       moviePath: encodeURIComponent(movie),
+      movieName: movie != null && replaceDotsWithSpace(last(movie.split('/'))),
       subtitleUrl: encodeURIComponent(subtitleUrl),
       serverAddress: `${ip}:${port}`,
     },
