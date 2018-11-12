@@ -9,7 +9,7 @@ export default (select, Consumer) => Component => {
     };
 
     shouldComponentUpdate(nextProps) {
-      return !isEqual(select(nextProps), select(this.props));
+      return !isEqual(nextProps, this.props);
     }
 
     render() {
@@ -17,7 +17,7 @@ export default (select, Consumer) => Component => {
       return children;
     }
   }
-  class WithChromeCastContext extends React.Component {
+  class WithContext extends React.Component {
     renderInner = state => {
       const stateProps = select(state);
       return (
@@ -32,5 +32,5 @@ export default (select, Consumer) => Component => {
     }
   }
 
-  return WithChromeCastContext;
+  return WithContext;
 };
