@@ -22,6 +22,7 @@ export default class ChromeCastControls extends React.Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.stop = this.stop.bind(this);
   }
+
   componentDidMount() {
     window.addEventListener('keypress', this.handleKeyPress);
   }

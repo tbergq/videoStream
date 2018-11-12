@@ -28,7 +28,8 @@ class MovieListItem extends React.Component {
   };
 
   renderTooltip = () => {
-    const { movie: { subtitleUrl, fullPath } } = this.props;
+    const { movie } = this.props;
+    const { subtitleUrl, fullPath } = movie;
 
     if (subtitleUrl) {
       const tooltip = (

@@ -31,6 +31,7 @@ const back = () => {
 
 class ChromeCast extends React.Component {
   interval = null;
+
   constructor(props) {
     super(props);
 

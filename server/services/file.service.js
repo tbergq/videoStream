@@ -70,8 +70,7 @@ export const getStream = (path, options) =>
 export const convertSrtToVtt = filePath => {
   const vttFileName = changeFileType(filePath, 'vtt');
 
-  fs
-    .createReadStream(filePath)
+  fs.createReadStream(filePath)
     .pipe(srt2vtt())
     .pipe(fs.createWriteStream(vttFileName));
 };
@@ -110,8 +109,7 @@ export const writeFileBufferToMoviePath = (fileBuffer, filePath) => {
   const subtitle = files.find(file => getFileType(file) === 'srt');
   const vttPath = changeFileType(filePath, 'vtt');
 
-  fs
-    .createReadStream(`${tmpFilePathExtracted}/${subtitle}`)
+  fs.createReadStream(`${tmpFilePathExtracted}/${subtitle}`)
     .pipe(srt2vtt())
     .pipe(fs.createWriteStream(vttPath));
 

@@ -33,7 +33,8 @@ const ColoredSliderArea = styled('div')([], props => ({
 }));
 
 const Timer = props => {
-  const percentPlayed = props.player.currentTime / props.player.duration * 100;
+  const percentPlayed =
+    (props.player.currentTime / props.player.duration) * 100;
   return (
     <Container>
       <Slider>
@@ -41,9 +42,8 @@ const Timer = props => {
         <Dot left={percentPlayed} />
       </Slider>
       <div>
-        {props.time}/{props.playerController.getFormattedTime(
-          props.player.duration,
-        )}
+        {props.time}/
+        {props.playerController.getFormattedTime(props.player.duration)}
       </div>
     </Container>
   );

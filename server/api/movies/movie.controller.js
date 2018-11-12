@@ -29,7 +29,9 @@ export const stream = (req, res) => {
 
   const stat = fs.statSync(filePath);
   const total = stat.size;
-  const { headers: { range } } = req;
+  const {
+    headers: { range },
+  } = req;
 
   if (range) {
     const parts = range.replace(/bytes=/, '').split('-');

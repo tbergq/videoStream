@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import MoviePlayer from '../components/MoviePlayer/MoviePlayer';
-import ChromeCastContainer from '../containers/ChromeCastContainer';
-import SubtitleContainer from '../containers/SubtitleContainer';
+import ChromeCastContainer from './ChromeCastContainer';
+import SubtitleContainer from './SubtitleContainer';
 import { withMoviePlayerContext } from '../context/MoviePlayerContext';
 import { withChromeCastContext } from '../context/ChromeCastContext';
 

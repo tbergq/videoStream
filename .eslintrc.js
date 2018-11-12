@@ -21,6 +21,7 @@ module.exports = {
         'beforeEach': true
     },
     'rules': {
+        'react/destructuring-assignment': 0,
         'react/no-multi-comp': 0,
         'react/no-unused-state': 0,
         'strict': 0,

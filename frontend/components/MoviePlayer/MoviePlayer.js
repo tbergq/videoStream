@@ -13,6 +13,7 @@ class MoviePlayer extends React.Component {
       isPlaying: false,
     };
   }
+
   componentDidMount = () => {
     window.addEventListener('keypress', this.handleKeyPress);
   };
