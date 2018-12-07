@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import path from 'path';
 
 import createRoutes from './routes';
 import movieListController from './controllers/movie-list.controller';
@@ -15,5 +16,8 @@ createRoutes(app);
 
 app.get('/', movieListController);
 app.get('/movie-player', moviePlayerController);
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, './favicon.ico'));
+});
 
 export default app;
