@@ -15,7 +15,7 @@ class SubtitleContainer extends React.Component {
   };
 
   subtitleSelected = url => {
-    this.props.downloadSubtitles(url, this.props.moviePath);
+    this.props.downloadSubtitle(url, this.props.moviePath);
     this.props.toggleModal();
   };
 
@@ -59,7 +59,7 @@ SubtitleContainer.propTypes = {
   subtitleUrl: PropTypes.string.isRequired,
   toggleModal: PropTypes.func.isRequired,
   showModal: PropTypes.bool.isRequired,
-  downloadSubtitles: PropTypes.func.isRequired,
+  downloadSubtitle: PropTypes.func.isRequired,
   moviePath: PropTypes.string.isRequired,
   onModalToggle: PropTypes.func.isRequired,
   movieName: PropTypes.string.isRequired,
