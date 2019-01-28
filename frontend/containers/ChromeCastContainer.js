@@ -16,7 +16,6 @@ class ChromeCastContainer extends React.Component {
   }
 
   initializeCastApi = () => {
-    const { moviePath, subtitleUrl } = this.props;
     const castContext = cast.framework.CastContext.getInstance();
 
     castContext.setOptions({
@@ -26,21 +25,23 @@ class ChromeCastContainer extends React.Component {
 
     castContext.addEventListener(
       cast.framework.CastContextEventType.CAST_STATE_CHANGED,
-      event => {
-        // console.log('cast state is', event.castState);
-        if (event.castState === 'CONNECTED') {
-          this.props.startCast(
-            moviePath,
-            subtitleUrl,
-            cast.framework.CastContext.getInstance().getCurrentSession(),
-          );
-        } else if (event.castState === 'NOT_CONNECTED') {
-          this.props.castingStopped();
-        }
-      },
+      this.castStateChanged,
     );
 
     this.props.setCastContext(castContext);
+  };
+
+  castStateChanged = event => {
+    const { moviePath, subtitleUrl } = this.props;
+    if (event.castState === 'CONNECTED') {
+      this.props.startCast(
+        moviePath,
+        subtitleUrl,
+        cast.framework.CastContext.getInstance().getCurrentSession(),
+      );
+    } else if (event.castState === 'NOT_CONNECTED') {
+      this.props.castingStopped();
+    }
   };
 
   render() {
