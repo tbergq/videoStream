@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
-import { MdPlayArrow, MdPause, MdStop } from 'react-icons/md';
+import {
+  MdPlayArrow,
+  MdPause,
+  MdStop,
+  MdFastForward,
+  MdFastRewind,
+} from 'react-icons/md';
 import PropTypes from 'prop-types';
 
 const ButtonWrapper = styled('span')([], {
@@ -39,6 +45,20 @@ export default class ChromeCastControls extends React.Component {
     this.props.playerController.stop();
   }
 
+  fastForward = () => {
+    this.seek(10);
+  };
+
+  fastRewind = () => {
+    this.seek(-10);
+  };
+
+  seek = time => {
+    const { playerController, player } = this.props;
+    player.currentTime += time;
+    playerController.seek();
+  };
+
   handleKeyPress(event) {
     switch (event.keyCode) {
       case SPACE_KEY:
@@ -55,6 +75,16 @@ export default class ChromeCastControls extends React.Component {
         <ButtonWrapper>
           <Button onClick={this.playOrPause}>
             {this.props.player.isPaused ? <MdPlayArrow /> : <MdPause />}
+          </Button>
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <Button onClick={this.fastRewind}>
+            <MdFastRewind />
+          </Button>
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <Button onClick={this.fastForward}>
+            <MdFastForward />
           </Button>
         </ButtonWrapper>
         <ButtonWrapper>
