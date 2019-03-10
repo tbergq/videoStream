@@ -1,46 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Slider from 'rc-slider';
 
 const Container = styled('div')([], {
   marginBottom: '8px',
+  '.rc-slider-track': {
+    backgroundColor: 'deeppink',
+  },
+  '.rc-slider-dot-active': {
+    borderColor: 'deeppink',
+  },
+  '.rc-slider-handle': {
+    border: 'solid 2px deeppink',
+  },
 });
-
-const Slider = styled('div')([], {
-  height: '10px',
-  border: '1px solid #e2e2e2',
-  borderRadius: '5px',
-  marginBottom: '8px',
-  position: 'relative',
-});
-
-const Dot = styled('div')([], props => ({
-  position: 'absolute',
-  height: '20px',
-  width: '20px',
-  borderRadius: '10px',
-  backgroundColor: 'deeppink',
-  top: '-5',
-  left: `${props.left}%`,
-  marginLeft: '-5px',
-}));
-
-const ColoredSliderArea = styled('div')([], props => ({
-  backgroundColor: 'deeppink',
-  width: `${props.width}%`,
-  height: '100%',
-  borderRadius: '10px 0 0 10px',
-}));
 
 const Timer = props => {
-  const percentPlayed =
-    (props.player.currentTime / props.player.duration) * 100;
+  function onChange(newTime) {
+    const { player } = props;
+    player.currentTime = newTime;
+    props.playerController.seek();
+  }
+
   return (
     <Container>
-      <Slider>
-        <ColoredSliderArea width={percentPlayed} />
-        <Dot left={percentPlayed} />
-      </Slider>
+      <Slider
+        max={props.player.duration}
+        dots
+        value={props.player.currentTime}
+        onChange={onChange}
+      />
       <div>
         {props.time}/
         {props.playerController.getFormattedTime(props.player.duration)}
@@ -52,6 +42,7 @@ const Timer = props => {
 Timer.propTypes = {
   playerController: PropTypes.shape({
     getFormattedTime: PropTypes.func.isRequired,
+    seek: PropTypes.func.isRequired,
   }).isRequired,
   player: PropTypes.shape({
     currentTime: PropTypes.number.isRequired,

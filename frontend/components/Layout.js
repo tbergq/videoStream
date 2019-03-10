@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Container, Col, Row } from 'react-bootstrap';
 import { injectGlobal } from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'rc-slider/assets/index.css';
 
 import Header from './Header';
 
