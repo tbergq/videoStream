@@ -4,9 +4,30 @@
 [include]
 
 [libs]
+flow-typed/
+
+[declarations]
+.+/flow-typed/npm/express_v4.16.x.js
+
 
 [lints]
+unnecessary-optional-chain=error
 
 [options]
+emoji=true
+
+esproposal.optional_chaining=enable
+esproposal.nullish_coalescing=enable
+
+module.file_ext=.js
+module.file_ext=.json
+
+suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError: .+
 
 [strict]
+;nonstrict-import
+unclear-type
+unsafe-getters-setters
+;untyped-import
+;untyped-type-import
+sketchy-null
