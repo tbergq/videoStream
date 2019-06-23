@@ -1,11 +1,13 @@
+// @flow
+
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const paths = {
-  DIST: path.resolve(__dirname, 'dist'),
-  JS: path.resolve(__dirname, 'frontend/pages'),
+  DIST: path.resolve(__dirname, 'apps', 'server', 'dist'),
+  JS: path.resolve(__dirname, 'apps', 'frontend', 'pages'),
 };
 // Webpack configuration
 module.exports = {
@@ -17,6 +19,9 @@ module.exports = {
     path: paths.DIST,
     filename: '[name].bundle.js',
   },
+  optimization: {
+    minimizer: [new TerserPlugin()],
+  },
   devtool: 'inline-source-map',
   plugins: [
     new Dotenv(),
@@ -25,7 +30,6 @@ module.exports = {
         NODE_ENV: "'production'",
       },
     }),
-    new UglifyJsPlugin(),
   ],
   module: {
     rules: [

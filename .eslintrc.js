@@ -1,45 +1,33 @@
+const OFF = 0;
+const WARN = 1;
+const ERROR = 2;
+ 
 module.exports = {
-    'parser': 'babel-eslint',
-    'extends': [
-        'airbnb',
-        'prettier',
-        'prettier/react',
-    ],
-    'plugins': [
-        'prettier',
-    ],
-    'globals': {
-        'document': true,
-        'fetch': true,
-        'window': true,
-        'cast': true,
-        'chrome': true,
-        'describe': true,
-        'it': true,
-        'expect': true,
-        'jest': true,
-        'beforeEach': true
+  root: true,
+ 
+  extends: ['@kiwicom/eslint-config'],
+ 
+  // adjust the rules as needed
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaVersion: 7,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: false,
+      experimentalObjectRestSpread: true,
     },
-    'rules': {
-        'react/destructuring-assignment': 0,
-        'react/no-multi-comp': 0,
-        'react/no-unused-state': 0,
-        'strict': 0,
-        'react/jsx-filename-extension': 0,
-        'no-unused-expressions': 0,
-        'import/prefer-default-export': 0,
-        'jsx-a11y/media-has-caption': 0,
-        'react/no-did-mount-set-state': 0,
-        'react/sort-comp': 0,
-        'prettier/prettier': [
-            'error',
-            {
-                'bracketSpacing': true,
-                'printWidth': 80,
-                'singleQuote': true,
-                'tabWidth': 2,
-                'trailingComma': 'all',
-            }
-        ],
-    }
+  },
+  env: {
+    jest: true,
+    node: true,
+    es6: true,
+    browser: true,
+  },
+  rules: {
+    eqeqeq: [ERROR, 'smart'],
+  },
+  globals: {
+    chrome: 'readonly',
+    cast: 'readonly'
+  }
 };

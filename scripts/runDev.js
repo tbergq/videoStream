@@ -1,3 +1,5 @@
+// @flow
+
 import { execSync } from 'child_process';
 import path from 'path';
 
@@ -7,4 +9,7 @@ execSync('yarn webpack --mode development &', {
   cwd: rootDir,
   stdio: 'inherit',
 });
-execSync('yarn dev:server', { cwd: rootDir, stdio: 'inherit' });
+execSync('yarn workspace @tbergq/vs-server dev', {
+  cwd: rootDir,
+  stdio: 'inherit',
+});
