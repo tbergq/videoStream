@@ -4,7 +4,6 @@ import { last } from 'ramda';
 import type { $Request, $Response } from 'express';
 import path from 'path';
 
-import getHtml from '../utils/get-html';
 import { getPrivateIp } from '../services/network.service';
 import { replaceDotsWithSpace } from '../utils/helpers';
 
@@ -33,15 +32,8 @@ export default async function moviePlayerController(
     },
   };
 
-  const html = getHtml(
-    [
-      '<script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>',
-      `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
-        initialState,
-      ).replace(/</g, '\\u003c')}</script>`,
-      '<script src="movie-player.bundle.js"></script>',
-    ].join(''),
-    'Cast screen',
-  );
-  res.send(html);
+  res.render('pages/movie-player', {
+    title: 'Movie player',
+    preloadedState: JSON.stringify(initialState).replace(/</g, '\\u003c'),
+  });
 }
