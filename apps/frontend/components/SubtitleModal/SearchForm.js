@@ -23,7 +23,6 @@ export default function SearchForm(props: Props) {
 
   const onChange = React.useCallback(
     (e: SyntheticInputEvent<HTMLInputElement>) => {
-      console.log('lol');
       setQuery(e.target.value);
     },
     [],

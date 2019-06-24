@@ -16,6 +16,9 @@ app.use(express.static('dist'));
 app.use(morgan('dev'));
 app.use(cors());
 app.use(compression());
+app.use(express.static(path.join(__dirname, 'dist')));
+app.set('view engine', 'ejs');
+
 createRoutes(app);
 
 app.get('/', movieListController);
